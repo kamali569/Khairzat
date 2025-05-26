@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>سایت فیلم حرفه‌ای | 10 فیلم پیشنهادی</title>
+
+<link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v30.1.0/dist/font-face.css" rel="stylesheet" />
+
+<style>
+  /* ریست اولیه */
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0; padding: 0;
+    font-family: 'Vazir', Tahoma, sans-serif;
+    background: #121212;
+    color: #eee;
+    line-height: 1.6;
+  }
+  header {
+    background: linear-gradient(90deg, #FF416C, #FF4B2B);
+    text-align: center;
+    padding: 30px 20px;
+    font-weight: 900;
+    font-size: 2.7rem;
+    letter-spacing: 2px;
+    box-shadow: 0 8px 20px rgba(255,75,43,0.6);
+    user-select: none;
+  }
+  main {
+    max-width: 1280px;
+    margin: 40px auto 60px;
+    padding: 0 20px;
+  }
+  
+  /* جعبه جستجو */
+  .search-box {
+    margin-bottom: 30px;
+    text-align: center;
+  }
+  .search-box input {
+    padding: 12px 18px;
+    width: 300px;
+    max-width: 90vw;
+    border-radius: 50px;
+    border: none;
+    outline: none;
+    font-size: 1.1rem;
+    box-shadow: 0 4px 15px #ff4b2baa;
+    transition: box-shadow 0.3s ease;
+  }
+  .search-box input:focus {
+    box-shadow: 0 4px 25px #ff7043cc;
+  }
+  
+  /* گرید فیلم‌ها */
+  .movies-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 25px;
+  }
+  
+  /* کارت فیلم */
+  .movie-card {
+    background: #1f1f1f;
+    border-radius: 15px;
+    box-shadow: 0 8px 22px rgba(0,0,0,0.8);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    position: relative;
+  }
+  .movie-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 14px 35px #ff4b2bcc;
+    z-index: 3;
+  }
+  
+  /* تصویر فیلم */
+  .movie-poster {
+    width: 100%;
+    height: 460px;
+    overflow: hidden;
+  }
+  .movie-poster img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+  }
+  .movie-card:hover .movie-poster img {
+    transform: scale(1.1);
+  }
+  
+  /* بخش متن */
+  .movie-info {
+    padding: 18px 22px 24px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .movie-title-fa {
+    font-size: 1.6rem;
+    font-weight: 900;
+    color: #ff4b2b;
+    margin-bottom: 5px;
+    text-shadow: 0 0 6px #ff4b2baa;
+  }
+  .movie-title-en {
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin-bottom: 14px;
+    color: #ccc;
+    font-style: italic;
+  }
+  .movie-genre {
+    margin-bottom: 12px;
+    font-size: 0.9rem;
+    color: #999;
+  }
+  .movie-rating {
+    margin-bottom: 18px;
+    font-weight: 700;
+    color: #ffd700;
+    user-select: none;
+  }
+  .movie-short-desc {
+    flex-grow: 1;
+    color: #ddd;
+    font-size: 1rem;
+    line-height: 1.4;
+    text-align: justify;
+  }
+  
+  /* دکمه‌ها */
+  .movie-buttons {
+    margin-top: 22px;
+    display: flex;
+    gap: 14px;
+  }
+  .btn {
+    flex: 1;
+    padding: 12px 0;
+    border-radius: 30px;
+    background: #ff4b2b;
+    color: #fff;
+    font-weight: 800;
+    text-align: center;
+    box-shadow: 0 6px 16px #ff4b2bbb;
+    user-select: none;
+    transition: background 0.3s ease;
+    text-decoration: none;
+  }
+  .btn:hover {
+    background: #ff7043;
+  }
+  
+  /* ستاره‌های رتبه‌بندی */
+  .stars {
+    display: inline-block;
+  }
+  .stars svg {
+    width: 18px;
+    height: 18px;
+    fill: #ffd700;
+    margin-left: 4px;
+  }
+
+  /* مودال نمایش جزئیات */
+  #movieModal {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+  #movieModal.show {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  #movieModal .modal-content {
+    background: #222;
+    border-radius: 15px;
+    width: 90vw;
+    max-width: 900px;
+    max-height: 85vh;
+    overflow-y: auto;
+    padding: 25px 30px 30px;
+    box-shadow: 0 10px 40px #ff4b2baa;
+    position: relative;
+  }
+  #movieModal .close-btn {
+    position: absolute;
+    top: 18px;
+    left: 22px;
+    font-size: 2.5rem;
+    font-weight: 900;
+    cursor: pointer;
+    color: #ff4b2b;
+    user-select: none;
+    transition: color 0.3s ease;
+  }
+  #movieModal .close-btn:hover {
+    color: #ff7043;
+  }
+  
+  #movieModal h2 {
+    margin-top: 0;
+    margin-bottom: 8px;
+    color: #ff4b2b;
+  }
+  #movieModal h3 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #ccc;
+    font-weight: 500;
+  }
+  #movieModal p {
+    line-height: 1.5;
+    color: #eee;
+  }
+
+  /* ویدیو تریلر */
+  #movieModal iframe {
+    display: block;
+    width: 100%;
+    height: 400px;
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 0 40px #ff4b2b88;
+    margin-top: 20px;
+  }
+
+  /* ریسپانسیو */
+  @media (max-width: 768px) {
+    .movie-poster {
+      height: 320px;
+    }
+    #movieModal iframe {
+      height: 250px;
+    }
+  }
+</style>
+
+</head>
+<body>
+
+<header>سایت فیلم حرفه‌ای | 10 فیلم پیشنهادی</header>
+
+<main>
+  <div class="search-box">
+    <input type="text" id="searchInput" placeholder="جستجوی فیلم بر اساس نام یا ژانر..." />
+  </div>
+  <div class="movies-grid" id="moviesGrid">
+    <!-- فیلم‌ها اینجا اضافه می‌شوند -->
+  </div>
+</main>
+
+<!-- مودال نمایش جزئیات -->
+<div id="movieModal">
+  <div class="modal-content">
+    <div class="close-btn" id="modalCloseBtn">&times;</div>
+    <h2 id="modalTitleFa"></h2>
+    <h3 id="modalTitleEn"></h3>
+    <p id="modalGenre"></p>
+    <p id="modalDescription"></p>
+    <div id="modalRating"></div>
+    <a href="#" target="_blank" id="modalWatchLink" class="btn" style="margin-top:20px;">تماشای فیلم</a>
+    <a href="#" target="_blank" id="modalImagesLink" class="btn" style="margin-top:12px; background:#444;">مشاهده تصاویر</a>
+    <iframe id="modalTrailer" src="" allowfullscreen allow="autoplay; encrypted-media"></iframe>
+  </div>
+</div>
+
+<script>
+  const movies = [
+    { id: 1, titleFa: "بتمن علیه جوکر", titleEn: "Batman vs Joker", genre: "اکشن، جنایی، هیجان‌انگیز", rating: 8.9, description: "نبرد نفس‌گیر و تیره بین بتمن و جوکر در دل شهر گاتهام. جوکر با ناهنجاری‌های روانی‌اش نظم شهر را به هم می‌زند و بتمن باید میان عدالت و انصاف تصمیم بگیرد. صحنه‌های اکشن پرتنش و بازی درخشان هیت لجر این فیلم را به یکی از ماندگارترین آثار ابرقهرمانی بدل کرده است.", poster: "https://upload.wikimedia.org/wikipedia/en/5/50/Batman_The_Dark_Knight_Returns.jpg", watchLink: "https://www.aparat.com/v/l40x5ve", imagesSearch: "Batman vs Joker", trailerEmbed: "https://www.youtube.com/embed/EXeTwQWrcwY" },
+    { id: 2, titleFa: "ارباب حلقه‌ها: بازگشت پادشاه", titleEn: "The Lord of the Rings: The Return of the King", genre: "فانتزی، ماجراجویی، درام", rating: 9.0, description: "نبرد نهایی برای نجات سرزمین میانه در برابر نیروهای تاریکی. در این فیلم حماسی، فرودو و همراهانش باید حلقه را نابود کنند تا سرزمینشان آزاد شود.", poster: "https://upload.wikimedia.org/wikipedia/en/9/9d/ReturnoftheKing00.jpg", watchLink: "https://www.aparat.com/v/abcdefgh", imagesSearch: "The Lord of the Rings Return of the King", trailerEmbed: "https://www.youtube.com/embed/r5X-hFf6Bwo" },
+    { id: 3, titleFa: "تایتانیک", titleEn: "Titanic", genre: "درام، عاشقانه", rating: 7.8, description: "داستان عاشقانه تراژدی تایتانیک؛ سفری لوکس که به سرعت به فاجعه‌ای تاریخی بدل می‌شود.", poster: "https://upload.wikimedia.org/wikipedia/commons/2/22/Titanic_poster.jpg", watchLink: "https://www.aparat.com/v/ijklmnop", imagesSearch: "Titanic movie", trailerEmbed: "https://www.youtube.com/embed/zCy5WQ9S4c0" },
+    { id: 4, titleFa: "درخشش", titleEn: "The Shining", genre: "ترسناک، روان‌شناسانه", rating: 8.4, description: "هفته‌ها در یک هتل متروکه زمستانی؛ جک تورنس و خانواده‌اش با ارواح و جنون دست و پنجه نرم می‌کنند.", poster: "https://upload.wikimedia.org/wikipedia/en/2/25/The_Shining_poster.jpg", watchLink: "https://www.aparat.com/v/qrstuvwx", imagesSearch: "The Shining movie", trailerEmbed: "https://www.youtube.com/embed/5Cb3ik6zP2I" },
+    { id: 5, titleFa: "شوالیه تاریکی", titleEn: "The Dark Knight", genre: "اکشن، جنایی", rating: 9.0, description: "نبرد حماسی بین بتمن و جوکر، با بازی بی‌نظیر هیت لجر.", poster: "https://upload.wikimedia.org/wikipedia/en/8/8a/Dark_Knight.jpg", watchLink: "https://www.aparat.com/v/yzaabcde", imagesSearch: "The Dark Knight", trailerEmbed: "https://www.youtube.com/embed/EXeTwQWrcwY" },
+    { id: 6, titleFa: "بی‌پایان", titleEn: "Inception", genre: "علمی-تخیلی، اکشن", rating: 8.8, description: "سفر به اعماق ذهن با دزدان رویاها؛ معمایی پیچیده از کریستوفر نولان.", poster: "https://upload.wikimedia.org/wikipedia/en/7/7f/Inception_ver3.jpg", watchLink: "https://www.aparat.com/v/fghijklm", imagesSearch: "Inception movie", trailerEmbed: "https://www.youtube.com/embed/YoHD9XEInc0" },
+    { id: 7, titleFa: "پالپ فیکشن", titleEn: "Pulp Fiction", genre: "جنایی، درام", rating: 8.9, description: "روایتی غیرخطی از داستان‌های جنایی لس‌آنجلس؛ شاهکاری از تارانتینو.", poster: "https://upload.wikimedia.org/wikipedia/en/8/82/Pulp_Fiction_cover.jpg", watchLink: "https://www.aparat.com/v/nopqrstu", imagesSearch: "Pulp Fiction", trailerEmbed: "https://www.youtube.com/embed/s7EdQ4FqbhY" },
+    { id: 8, titleFa: "زندگی زیباست", titleEn: "Life is Beautiful", genre: "درام، کمدی", rating: 8.6, description: "داستان دلنشین یک پدر و پسر در اردوگاه کار اجباری؛ ترکیبی از طنز و تراژدی.", poster: "https://upload.wikimedia.org/wikipedia/en/7/7f/Bella_locandina.jpg", watchLink: "https://www.aparat.com/v/vwxyzabc", imagesSearch: "Life is Beautiful", trailerEmbed: "https://www.youtube.com/embed/3Y1ZgYJJPik" },
+    { id: 9, titleFa: "فارست گامپ", titleEn: "Forrest Gump", genre: "درام، عاشقانه", rating: 8.8, description: "سفر زندگی فارست گامپ؛ مردی با قلبی ساده اما تأثیری بزرگ بر جهان.", poster: "https://upload.wikimedia.org/wikipedia/en/6/67/Forrest_Gump_poster.jpg", watchLink: "https://www.aparat.com/v/cdefghij", imagesSearch: "Forrest Gump", trailerEmbed: "https://www.youtube.com/embed=bLvqoHBptjg" },
+    { id: 10, titleFa: "ماتریکس", titleEn: "The Matrix", genre: "علمی-تخیلی، اکشن", rating: 8.7, description: "دنیای واقعی یا شبیه‌سازی؟ نیو باید راز ماتریکس را کشف کند.", poster: "https://upload.wikimedia.org/wikipedia/en/c/c1/The_Matrix_Poster.jpg", watchLink: "https://www.aparat.com/v/klmnopqrst", imagesSearch: "The Matrix", trailerEmbed: "https://www.youtube.com/embed/vKQi3bBA1y8" }
+  ];
+
+  const moviesGrid = document.getElementById('moviesGrid');
+  const modal = document.getElementById('movieModal');
+  const modalCloseBtn = document.getElementById('modalCloseBtn');
+  const modalTitleFa = document.getElementById('modalTitleFa');
+  const modalTitleEn = document.getElementById('modalTitleEn');
+  const modalGenre = document.getElementById('modalGenre');
+  const modalDescription = document.getElementById('modalDescription');
+  const modalRating = document.getElementById('modalRating');
+  const modalWatchLink = document.getElementById('modalWatchLink');
+  const modalImagesLink = document.getElementById('modalImagesLink');
+  const modalTrailer = document.getElementById('modalTrailer');
+  const searchInput = document.getElementById('searchInput');
+
+  function createStars(rating) {
+    const starsCount = Math.round(rating);
+    let starsHTML = '';
+    for(let i=0; i<5; i++) {
+      if(i < starsCount) {
+        starsHTML += `<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 15l-5.878 3.09L5.636 12 1 7.909l6.061-.909L10 2l2.939 5 6.061.909L14.364 12l1.514 6.09z"/></svg>`;
+      } else {
+        starsHTML += `<svg viewBox="0 0 20 20" aria-hidden="true" style="fill:#555;"><path d="M10 15l-5.878 3.09L5.636 12 1 7.909l6.061-.909L10 2l2.939 5 6.061.909L14.364 12l1.514 6.09z"/></svg>`;
+      }
+    }
+    return starsHTML;
+  }
+
+  function renderMovies(list) {
+    moviesGrid.innerHTML = '';
+    if(list.length === 0) {
+      moviesGrid.innerHTML = '<p style="text-align:center; color:#f88; font-weight:bold;">فیلمی پیدا نشد!</p>';
+      return;
+    }
+    list.forEach(movie => {
+      const card = document.createElement('div');
+      card.className = 'movie-card';
+      card.tabIndex = 0;
+      card.setAttribute('role', 'button');
+      card.setAttribute('aria-label', `نمایش جزئیات فیلم ${movie.titleFa}`);
+      card.innerHTML = `
+        <div class="movie-poster">
+          <img src="${movie.poster}" alt="پوستر فیلم ${movie.titleFa}" loading="lazy" />
+        </div>
+        <div class="movie-info">
+          <div class="movie-title-fa">${movie.titleFa}</div>
+          <div class="movie-title-en">${movie.titleEn}</div>
+          <div class="movie-genre">${movie.genre}</div>
+          <div class="movie-rating stars">${createStars(movie.rating)} (${movie.rating.toFixed(1)})</div>
+          <div class="movie
