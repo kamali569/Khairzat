@@ -1,419 +1,473 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="fa">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>سایت فیلم حرفه‌ای | ۲۰ فیلم پیشنهادی</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v30.1.0/dist/font-face.css" rel="stylesheet" />
+  <!-- 1. عنوان و توضیح -->
+  <title>خبرزات – آخرین اخبار روز</title>
+  <meta name="description" content="خبرزات | مرجع اخبار ایران و جهان. با ما همیشه به‌روز باشید." />
 
-<style>
-  /* ریست اولیه */
-  *, *::before, *::after {
-    box-sizing: border-box;
-  }
-  body {
-    margin: 0; padding: 0;
-    font-family: 'Vazir', Tahoma, sans-serif;
-    background: #121212;
-    color: #eee;
-    line-height: 1.6;
-  }
-  header {
-    background: linear-gradient(90deg, #FF416C, #FF4B2B);
-    text-align: center;
-    padding: 30px 20px;
-    font-weight: 900;
-    font-size: 2.7rem;
-    letter-spacing: 2px;
-    box-shadow: 0 8px 20px rgba(255,75,43,0.6);
-    user-select: none;
-  }
-  main {
-    max-width: 1280px;
-    margin: 40px auto 60px;
-    padding: 0 20px;
-  }
-  
-  /* جعبه جستجو */
-  .search-box {
-    margin-bottom: 30px;
-    text-align: center;
-  }
-  .search-box input {
-    padding: 12px 18px;
-    width: 300px;
-    max-width: 90vw;
-    border-radius: 50px;
-    border: none;
-    outline: none;
-    font-size: 1.1rem;
-    box-shadow: 0 4px 15px #ff4b2baa;
-    transition: box-shadow 0.3s ease;
-  }
-  .search-box input:focus {
-    box-shadow: 0 4px 25px #ff7043cc;
-  }
-  
-  /* گرید فیلم‌ها */
-  .movies-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 25px;
-  }
-  
-  /* کارت فیلم */
-  .movie-card {
-    background: #1f1f1f;
-    border-radius: 15px;
-    box-shadow: 0 8px 22px rgba(0,0,0,0.8);
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    cursor: pointer;
-    transition: transform 0.3s ease;
-    position: relative;
-  }
-  .movie-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 14px 35px #ff4b2bcc;
-    z-index: 3;
-  }
-  
-  /* تصویر فیلم */
-  .movie-poster {
-    width: 100%;
-    height: 460px;
-    overflow: hidden;
-  }
-  .movie-poster img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.4s ease;
-  }
-  .movie-card:hover .movie-poster img {
-    transform: scale(1.1);
-  }
-  
-  /* بخش متن */
-  .movie-info {
-    padding: 18px 22px 24px;
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-  }
-  .movie-title-fa {
-    font-size: 1.6rem;
-    font-weight: 900;
-    color: #ff4b2b;
-    margin-bottom: 5px;
-    text-shadow: 0 0 6px #ff4b2baa;
-  }
-  .movie-title-en {
-    font-size: 1.1rem;
-    font-weight: 500;
-    margin-bottom: 14px;
-    color: #ccc;
-    font-style: italic;
-  }
-  .movie-genre {
-    margin-bottom: 12px;
-    font-size: 0.9rem;
-    color: #999;
-  }
-  .movie-rating {
-    margin-bottom: 18px;
-    font-weight: 700;
-    color: #ffd700;
-    user-select: none;
-  }
-  .movie-short-desc {
-    flex-grow: 1;
-    color: #ddd;
-    font-size: 1rem;
-    line-height: 1.4;
-    text-align: justify;
-  }
-  
-  /* دکمه‌ها */
-  .movie-buttons {
-    margin-top: 22px;
-    display: flex;
-    gap: 14px;
-  }
-  .btn {
-    flex: 1;
-    padding: 12px 0;
-    border-radius: 30px;
-    background: #ff4b2b;
-    color: #fff;
-    font-weight: 800;
-    text-align: center;
-    box-shadow: 0 6px 16px #ff4b2bbb;
-    user-select: none;
-    transition: background 0.3s ease;
-    text-decoration: none;
-  }
-  .btn:hover {
-    background: #ff7043;
-  }
-  
-  /* ستاره‌های رتبه‌بندی */
-  .stars {
-    display: inline-block;
-  }
-  .stars svg {
-    width: 18px;
-    height: 18px;
-    fill: #ffd700;
-    margin-left: 4px;
-  }
+  <!-- 2. Open Graph -->
+  <meta property="og:title" content="خبرزات – آخرین اخبار روز" />
+  <meta property="og:description" content="خبرزات | مرجع اخبار ایران و جهان. با ما همیشه به‌روز باشید." />
+  <meta property="og:image" content="./1212.png" />
+  <meta property="og:image:alt" content="آیکون میکروفن برای خبرزات" />
+  <meta property="og:url" content="https://youruser.github.io/khabrozat-site/" />
+  <meta property="og:type" content="website" />
 
-  /* مودال نمایش جزئیات */
-  #movieModal {
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0,0,0,0.85);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 999;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s ease;
-  }
-  #movieModal.show {
-    opacity: 1;
-    pointer-events: auto;
-  }
-  #movieModal .modal-content {
-    background: #222;
-    border-radius: 15px;
-    width: 90vw;
-    max-width: 900px;
-    max-height: 85vh;
-    overflow-y: auto;
-    padding: 25px 30px 30px;
-    box-shadow: 0 10px 40px #ff4b2baa;
-    position: relative;
-  }
-  #movieModal .close-btn {
-    position: absolute;
-    top: 18px;
-    left: 22px;
-    font-size: 2.5rem;
-    font-weight: 900;
-    cursor: pointer;
-    color: #ff4b2b;
-    user-select: none;
-    transition: color 0.3s ease;
-  }
-  #movieModal .close-btn:hover {
-    color: #ff7043;
-  }
-  
-  #movieModal h2 {
-    margin-top: 0;
-    margin-bottom: 8px;
-    color: #ff4b2b;
-  }
-  #movieModal h3 {
-    margin-top: 0;
-    margin-bottom: 20px;
-    color: #ccc;
-    font-weight: 500;
-  }
-  #movieModal p {
-    line-height: 1.5;
-    color: #eee;
-  }
+  <!-- 3. Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="خبرزات – آخرین اخبار روز" />
+  <meta name="twitter:description" content="خبرزات | مرجع اخبار ایران و جهان. با ما همیشه به‌روز باشید." />
+  <meta name="twitter:image" content="./1212.png" />
 
-  /* ویدیو تریلر */
-  #movieModal iframe {
-    display: block;
-    width: 100%;
-    height: 400px;
-    border: none;
-    border-radius: 12px;
-    box-shadow: 0 0 40px #ff4b2b88;
-    margin-top: 20px;
-  }
-
-  /* ریسپانسیو */
-  @media (max-width: 768px) {
-    .movie-poster {
-      height: 320px;
-    }
-    #movieModal iframe {
-      height: 250px;
+  <!-- 4. JSON-LD ساختارمند -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "NewsArticle",
+    "headline": "خبرزات – مرجع اخبار ایران و جهان",
+    "description": "خبرزات | مرجع اخبار ایران و جهان. با ما همیشه به‌روز باشید.",
+    "image": ["./1212.png"],
+    "datePublished": "2025-05-30T08:00:00+03:30",
+    "dateModified": "2025-05-30T08:00:00+03:30",
+    "publisher": {
+      "@type": "Organization",
+      "name": "خبرزات",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "./1212.png"
+      }
+    },
+    "author": {
+      "@type": "Person",
+      "name": "خبرزات"
     }
   }
-</style>
+  </script>
 
+  <!-- CSS و استایل‌ها -->
+  <style>
+    body { margin:0; font-family:Tahoma,sans-serif; direction:rtl;
+      background:linear-gradient(45deg,red,orange,yellow,green,cyan,blue,violet);
+      background-size:600% 600%; animation:rainbow 30s linear infinite; }
+    @keyframes rainbow {0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+
+    .content, .ads {
+      width:70%; margin:20px auto; background:#fff; padding:15px;
+      border-radius:8px; box-shadow:0 0 10px rgba(0,0,0,0.2); min-height:200px;
+    }
+    .content h2, .ads h2 { margin-top:0; }
+
+    #floating-circle {
+      position:fixed; bottom:20px; right:20px; width:50px; height:50px;
+      background:rgba(255,255,255,0.7); border-radius:50%; display:flex;
+      align-items:center; justify-content:center; cursor:pointer; z-index:1000;
+    }
+
+    #admin-panel {
+      display:none; position:fixed; top:10px; left:50%; transform:translateX(-50%);
+      width:380px; background:#fff; padding:15px; border-radius:8px;
+      box-shadow:0 0 15px rgba(0,0,0,0.3); z-index:1001;
+    }
+    #admin-panel h3 { margin-top:0; }
+    #admin-panel .tab-buttons button {
+      margin:3px; padding:5px 10px; border:none; background:#ddd;
+      cursor:pointer; border-radius:4px;
+    }
+    #admin-panel .tab-buttons button.active {
+      background:#c33; color:#fff;
+    }
+    #admin-panel .tab-content { display:none; margin-top:10px; }
+    #admin-panel .tab-content.active { display:block; }
+    #admin-panel input, #admin-panel textarea {
+      width:calc(100% - 12px); padding:5px; margin-bottom:6px; box-sizing:border-box;
+    }
+    #admin-panel input[type="file"] { margin-bottom:6px; }
+    #admin-panel .item-list {
+      max-height:120px; overflow-y:auto; border:1px solid #ccc;
+      padding:4px; margin-bottom:6px; border-radius:4px;
+    }
+    #admin-panel .item-list div {
+      padding:4px; cursor:pointer; border-bottom:1px solid #eee;
+    }
+    #admin-panel .item-list .selected {
+      background:#f8d7da; color:#721c24;
+    }
+    #admin-panel button {
+      border:none; padding:6px 12px; cursor:pointer;
+      border-radius:4px; margin-right:4px;
+    }
+    #admin-panel .save-btn { background:#28a745; color:#fff; }
+    #admin-panel .delete-btn { background:#dc3545; color:#fff; }
+    #admin-panel .logout-btn {
+      background:#333; color:#fff; width:100%; margin-top:10px;
+    }
+
+    .slider-container {
+      position:relative; overflow:hidden; width:100%; height:200px; margin-top:10px;
+    }
+    .slider-container img {
+      width:100%; height:100%; object-fit:cover; position:absolute;
+      top:0; left:0; opacity:0; transition:opacity 1s ease-in-out;
+    }
+    .slider-container img.active { opacity:1; }
+
+    #ad-info {
+      text-align:center; background:#fff; padding:10px; margin:20px auto 0;
+      width:70%; font-size:14px; color:#333; box-shadow:0 -1px 5px rgba(0,0,0,0.1);
+      border-radius:8px;
+    }
+
+    #user-chat-wrapper {
+      position:fixed; bottom:0; left:0; width:100%; z-index:999;
+      display:flex; flex-direction:column; align-items:flex-end;
+    }
+    #chat-toggle-btn {
+      background:#007bff; color:#fff; border:none; padding:6px 12px;
+      cursor:pointer; border-radius:4px 4px 0 0;
+    }
+    #user-chat {
+      display:none; width:100%; background:rgba(255,255,255,0.9);
+      padding:8px; box-shadow:0 -2px 6px rgba(0,0,0,0.2); flex-direction:column;
+    }
+    #user-chat-history {
+      max-height:120px; overflow-y:auto; border:1px solid #ccc;
+      margin-bottom:6px; padding:4px; background:#fff;
+    }
+    #user-chat textarea {
+      flex:1; resize:none; padding:5px;
+    }
+    #user-chat button {
+      align-self:flex-end; width:80px; height:36px; margin-top:4px;
+      background:#007bff; color:#fff; border:none; cursor:pointer;
+    }
+  </style>
 </head>
 <body>
 
-<header>سایت فیلم حرفه‌ای | ۲۰ فیلم پیشنهادی</header>
-
-<main>
-  <div class="search-box">
-    <input type="text" id="searchInput" placeholder="جستجوی فیلم بر اساس نام یا ژانر..." />
+  <!-- اخبار -->
+  <div class="content">
+    <h2>محتوای خبرزات</h2>
+    <div id="mainContent"></div>
   </div>
-  <div class="movies-grid" id="moviesGrid">
-    <!-- فیلم‌ها اینجا اضافه می‌شوند -->
+
+  <!-- تبلیغات -->
+  <div class="ads" id="adsSection">
+    <h2>تبلیغات سایت</h2>
+    <div id="mainAds"></div>
   </div>
-</main>
 
-<!-- مودال نمایش جزئیات -->
-<div id="movieModal">
-  <div class="modal-content">
-    <div class="close-btn" id="modalCloseBtn">&times;</div>
-    <h2 id="modalTitleFa"></h2>
-    <h3 id="modalTitleEn"></h3>
-    <p id="modalGenre"></p>
-    <p id="modalDescription"></p>
-    <div id="modalRating"></div>
-    <a href="#" target="_blank" id="modalWatchLink" class="btn" style="margin-top:20px;">تماشای فیلم</a>
-    <a href="#" target="_blank" id="modalImagesLink" class="btn" style="margin-top:12px; background:#444;">مشاهده تصاویر</a>
-    <iframe id="modalTrailer" src="" allowfullscreen allow="autoplay; encrypted-media"></iframe>
+  <!-- اطلاع‌رسانی تبلیغات -->
+  <div id="ad-info">
+    برای خرید امکان تبلیغ از نسخه‌های <strong>طلایی (۵۰٬۰۰۰ تومان)</strong>،
+    <strong>نقره‌ای (۳۵٬۰۰۰ تومان)</strong> و
+    <strong>برنزی (۲۰٬۰۰۰ تومان)</strong> در روز،
+    روی دکمه «چت» کلیک کنید و با مدیریت گفتگو نمایید.
   </div>
-</div>
 
-<script>
-  const movies = [
-    {
-      id: 1,
-      titleFa: "بتمن علیه جوکر",
-      titleEn: "Batman vs Joker",
-      genre: "اکشن، جنایی، هیجان‌انگیز",
-      rating: 8.9,
-      description: "نبرد نفس‌گیر و تیره بین بتمن و جوکر در دل شهر گاتهام. جوکر با ناهنجاری‌های روانی‌اش نظم شهر را به هم می‌زند و بتمن باید میان عدالت و انصاف تصمیم بگیرد. صحنه‌های اکشن پرتنش و بازی درخشان هیت لجر این فیلم را به یکی از ماندگارترین آثار ابرقهرمانی بدل کرده است.",
-      poster: "https://upload.wikimedia.org/wikipedia/en/5/50/Batman_The_Dark_Knight_Returns.jpg",
-      watchLink: "https://www.aparat.com/v/l40x5ve",
-      imagesSearch: "Batman vs Joker",
-      trailerEmbed: "https://www.youtube.com/embed/EXeTwQWrcwY"
-    },
-    {
-      id: 2,
-      titleFa: "ارباب حلقه‌ها: بازگشت پادشاه",
-      titleEn: "The Lord of the Rings: The Return of the King",
-      genre: "فانتزی، ماجراجویی، درام",
-      rating: 9.0,
-      description: "نبرد نهایی برای نجات سرزمین میانه در برابر نیروهای تاریکی. در این فیلم حماسی، فرودو و همراهانش باید حلقه را نابود کنند تا سرزمینشان آزاد شود.",
-      poster: "https://upload.wikimedia.org/wikipedia/en/9/9d/ReturnoftheKing00.jpg",
-      watchLink: "https://www.aparat.com/v/abcdefgh",
-      imagesSearch: "The Lord of the Rings Return of the King",
-      trailerEmbed: "https://www.youtube.com/embed/r5X-hFf6Bwo"
-    },
-    // اینجا ۱۸ فیلم دیگر اضافه کن
-  ];
+  <!-- چت کاربران -->
+  <div id="user-chat-wrapper">
+    <button id="chat-toggle-btn" onclick="toggleUserChat()">چت</button>
+    <div id="user-chat">
+      <div id="user-chat-history"></div>
+      <textarea id="userMessage" placeholder="درخواست تبلیغ خود را بنویسید..."></textarea>
+      <button onclick="sendUserMessage()">ارسال</button>
+    </div>
+  </div>
 
-  const moviesGrid = document.getElementById('moviesGrid');
-  const modal = document.getElementById('movieModal');
-  const modalCloseBtn = document.getElementById('modalCloseBtn');
-  const modalTitleFa = document.getElementById('modalTitleFa');
-  const modalTitleEn = document.getElementById('modalTitleEn');
-  const modalGenre = document.getElementById('modalGenre');
-  const modalDescription = document.getElementById('modalDescription');
-  const modalRating = document.getElementById('modalRating');
-  const modalWatchLink = document.getElementById('modalWatchLink');
-  const modalImagesLink = document.getElementById('modalImagesLink');
-  const modalTrailer = document.getElementById('modalTrailer');
-  const searchInput = document.getElementById('searchInput');
+  <!-- دایره ورود به پنل مدیریت -->
+  <div id="floating-circle" onclick="toggleAdminPanel()">⚙️</div>
 
-  // تولید ستاره برای رتبه‌بندی
-  function createStars(rating) {
-    const starsCount = Math.round(rating);
-    let starsHTML = '';
-    for(let i=0; i<5; i++) {
-      if(i < starsCount) {
-        starsHTML += `<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 15l-5.878 3.09L5.636 12 1 7.909l6.061-.909L10 2l2.939 5 6.061.909L14.364 12l1.514 6.09z"/></svg>`;
-      } else {
-        starsHTML += `<svg viewBox="0 0 20 20" aria-hidden="true" style="fill:#555;"><path d="M10 15l-5.878 3.09L5.636 12 1 7.909l6.061-.909L10 2l2.939 5 6.061.909L14.364 12l1.514 6.09z"/></svg>`;
+  <!-- پنل مدیریت -->
+  <div id="admin-panel">
+    <div id="login-section">
+      <h3>ورود به مدیریت</h3>
+      <input type="password" id="admin-password" placeholder="رمز عبور" />
+      <label>حاصل جمع <span id="cap-a"></span> + <span id="cap-b"></span> = ؟</label>
+      <input type="text" id="admin-captcha" placeholder="عدد را وارد کنید" />
+      <button class="save-btn" onclick="adminLogin()">ورود</button>
+    </div>
+
+    <div id="management-section" style="display:none;">
+      <h3>پنل مدیریت</h3>
+      <div class="tab-buttons">
+        <button id="tab-content-btn" class="active" onclick="showTab('content')">محتوا</button>
+        <button id="tab-ads-btn"       onclick="showTab('ads')">تبلیغات</button>
+        <button id="tab-messages-btn"  onclick="showTab('messages')">چت‌ها</button>
+      </div>
+
+      <label><input type="checkbox" id="toggle-ads" checked onchange="toggleAds()"> نمایش تبلیغات</label>
+
+      <div id="tab-content" class="tab-content active">
+        <label>شماره (1 تا 20):</label>
+        <input type="number" id="content-num" min="1" max="20" />
+        <label>متن خبر:</label><textarea id="content-text"></textarea>
+        <label>لینک خبر (اختیاری):</label><input type="url" id="content-link" />
+        <label>آپلود تصاویر:</label><input type="file" id="content-images" multiple accept="image/*" />
+        <button class="save-btn" onclick="saveContent()">ثبت / بروزرسانی</button>
+        <button class="delete-btn" onclick="deleteContent()">حذف</button>
+        <div class="item-list" id="content-list"></div>
+      </div>
+
+      <div id="tab-ads" class="tab-content">
+        <label>شماره (1 تا 5):</label><input type="number" id="ads-num" min="1" max="5" />
+        <label>متن تبلیغ:</label><textarea id="ads-text"></textarea>
+        <label>لینک تبلیغ:</label><input type="url" id="ads-link" />
+        <label>آپلود تصاویر:</label><input type="file" id="ads-images" multiple accept="image/*" />
+        <button class="save-btn" onclick="saveAds()">ثبت / بروزرسانی</button>
+        <button class="delete-btn" onclick="deleteAds()">حذف</button>
+        <div class="item-list" id="ads-list"></div>
+      </div>
+
+      <div id="tab-messages" class="tab-content">
+        <h4>گفت‌وگوهای کاربران</h4>
+        <div class="item-list" id="admin-user-list" style="max-height:100px;"></div>
+        <div id="admin-chat-history" style="border:1px solid #ccc; padding:5px; height:120px; overflow-y:auto; margin-bottom:6px;"></div>
+        <textarea id="admin-reply" placeholder="پیام خود را بنویسید..." style="width:100%; height:50px;"></textarea>
+        <button class="save-btn" onclick="sendAdminMessage()">ارسال به کاربر</button>
+      </div>
+
+      <button class="logout-btn" onclick="adminLogout()">خروج</button>
+    </div>
+  </div>
+
+  <script>
+    let contents = JSON.parse(localStorage.getItem('contents') || '[]');
+    let ads      = JSON.parse(localStorage.getItem('ads')      || '[]');
+    let chats    = JSON.parse(localStorage.getItem('chatData') || '[]');
+    let showAdsFlag = JSON.parse(localStorage.getItem('showAds') || 'true');
+
+    const capA = Math.floor(Math.random()*10);
+    const capB = Math.floor(Math.random()*10);
+    document.getElementById('cap-a').innerText = capA;
+    document.getElementById('cap-b').innerText = capB;
+
+    function renderMain() {
+      const mC = document.getElementById('mainContent');
+      mC.innerHTML = '';
+      contents.forEach(item=>{
+        if(!item) return;
+        let div=document.createElement('div'); div.style.marginBottom='15px';
+        let h=document.createElement('h4');
+        if(item.link){ let a=document.createElement('a'); a.href=item.link; a.target='_blank'; a.textContent=item.text; h.appendChild(a); }
+        else h.textContent=item.text;
+        div.appendChild(h);
+        if(item.images && item.images.length){
+          let slider=document.createElement('div'); slider.className='slider-container';
+          item.images.forEach((src,i)=>{
+            let img=document.createElement('img'); img.src=src;
+            if(i===0) img.classList.add('active');
+            slider.appendChild(img);
+          });
+          div.appendChild(slider);
+          let idx=0,imgEls=slider.querySelectorAll('img');
+          setInterval(()=>{
+            imgEls[idx].classList.remove('active');
+            idx=(idx+1)%imgEls.length;
+            imgEls[idx].classList.add('active');
+          },4000);
+        }
+        mC.appendChild(div);
+      });
+
+      const adsSection=document.getElementById('adsSection');
+      if(showAdsFlag){
+        adsSection.style.display='block';
+        const mA=document.getElementById('mainAds');
+        mA.innerHTML='';
+        ads.forEach(item=>{
+          if(!item) return;
+          let div=document.createElement('div'); div.style.marginBottom='10px';
+          let p=document.createElement('p');
+          if(item.link){ let a=document.createElement('a'); a.href=item.link; a.target='_blank'; a.textContent=item.text; p.appendChild(a); }
+          else p.textContent=item.text;
+          div.appendChild(p);
+          if(item.images && item.images.length){
+            let slider=document.createElement('div'); slider.className='slider-container';
+            item.images.forEach((src,i)=>{
+              let img=document.createElement('img'); img.src=src;
+              if(i===0) img.classList.add('active');
+              slider.appendChild(img);
+            });
+            div.appendChild(slider);
+            let idx=0,imgEls=slider.querySelectorAll('img');
+            setInterval(()=>{
+              imgEls[idx].classList.remove('active');
+              idx=(idx+1)%imgEls.length;
+              imgEls[idx].classList.add('active');
+            },4000);
+          }
+          mA.appendChild(div);
+        });
+      } else adsSection.style.display='none';
+    }
+
+    function saveData(){
+      localStorage.setItem('contents',JSON.stringify(contents));
+      localStorage.setItem('ads',JSON.stringify(ads));
+      localStorage.setItem('chatData',JSON.stringify(chats));
+      localStorage.setItem('showAds',JSON.stringify(showAdsFlag));
+    }
+
+    function showTab(name){
+      ['content','ads','messages'].forEach(t=>{
+        document.getElementById('tab-'+t).classList.remove('active');
+        document.getElementById('tab-'+t+'-btn').classList.remove('active');
+      });
+      document.getElementById('tab-'+name).classList.add('active');
+      document.getElementById('tab-'+name+'-btn').classList.add('active');
+    }
+
+    function refreshContentList(){
+      let list=document.getElementById('content-list'); list.innerHTML='';
+      for(let i=1;i<=20;i++){
+        let d=document.createElement('div'); d.textContent='خبر '+i;
+        if(contents[i-1]) d.classList.add('selected');
+        d.onclick=()=>{
+          document.getElementById('content-num').value=i;
+          let it=contents[i-1]||{text:'',link:'',images:[]};
+          document.getElementById('content-text').value=it.text;
+          document.getElementById('content-link').value=it.link;
+        };
+        list.appendChild(d);
       }
     }
-    return starsHTML;
-  }
-
-  // نمایش فیلم‌ها
-  function renderMovies(list) {
-    moviesGrid.innerHTML = '';
-    if(list.length === 0) {
-      moviesGrid.innerHTML = '<p style="text-align:center; color:#f88; font-weight:bold;">فیلمی پیدا نشد!</p>';
-      return;
+    function saveContent(){
+      let n=+document.getElementById('content-num').value;
+      if(n<1||n>20){alert('شماره نامعتبر');return;}
+      let t=document.getElementById('content-text').value.trim();
+      let l=document.getElementById('content-link').value.trim();
+      let files=document.getElementById('content-images').files, imgs=[];
+      for(let f of files) imgs.push(URL.createObjectURL(f));
+      contents[n-1]={text:t,link:l,images:imgs};
+      saveData(); renderMain(); refreshContentList();
     }
-    list.forEach(movie => {
-      const card = document.createElement('div');
-      card.className = 'movie-card';
-      card.tabIndex = 0;
-      card.setAttribute('role', 'button');
-      card.setAttribute('aria-label', `نمایش جزئیات فیلم ${movie.titleFa}`);
-      card.innerHTML = `
-        <div class="movie-poster">
-          <img src="${movie.poster}" alt="پوستر فیلم ${movie.titleFa}" loading="lazy" />
-        </div>
-        <div class="movie-info">
-          <div class="movie-title-fa">${movie.titleFa}</div>
-          <div class="movie-title-en">${movie.titleEn}</div>
-          <div class="movie-genre">${movie.genre}</div>
-          <div class="movie-rating stars">${createStars(movie.rating)} (${movie.rating.toFixed(1)})</div>
-          <div class="movie-short-desc">${movie.description.length > 120 ? movie.description.slice(0,120) + '...' : movie.description}</div>
-          <div class="movie-buttons">
-            <a href="${movie.watchLink}" target="_blank" class="btn">تماشای فیلم</a>
-            <a href="https://www.google.com/search?tbm=isch&q=${encodeURIComponent(movie.imagesSearch)}" target="_blank" class="btn" style="background:#444;">تصاویر</a>
-          </div>
-        </div>
-      `;
-      card.addEventListener('click', () => openModal(movie));
-      card.addEventListener('keypress', (e) => { if(e.key === 'Enter') openModal(movie); });
-      moviesGrid.appendChild(card);
-    });
-  }
-
-  // باز کردن مودال
-  function openModal(movie) {
-    modalTitleFa.textContent = movie.titleFa;
-    modalTitleEn.textContent = movie.titleEn;
-    modalGenre.textContent = 'ژانر: ' + movie.genre;
-    modalDescription.textContent = movie.description;
-    modalRating.innerHTML = 'امتیاز: ' + createStars(movie.rating) + ` (${movie.rating.toFixed(1)})`;
-    modalWatchLink.href = movie.watchLink;
-    modalImagesLink.href = `https://www.google.com/search?tbm=isch&q=${encodeURIComponent(movie.imagesSearch)}`;
-    modalTrailer.src = movie.trailerEmbed + "?autoplay=1&mute=1";
-    modal.classList.add('show');
-    document.body.style.overflow = 'hidden';
-  }
-
-  // بستن مودال
-  function closeModal() {
-    modal.classList.remove('show');
-    modalTrailer.src = '';
-    document.body.style.overflow = '';
-  }
-
-  modalCloseBtn.addEventListener('click', closeModal);
-  modal.addEventListener('click', (e) => {
-    if(e.target === modal) closeModal();
-  });
-
-  // جستجو
-  searchInput.addEventListener('input', (e) => {
-    const q = e.target.value.trim().toLowerCase();
-    if(!q) {
-      renderMovies(movies);
-      return;
+    function deleteContent(){
+      let n=+document.getElementById('content-num').value;
+      contents[n-1]=null; saveData(); renderMain(); refreshContentList();
     }
-    const filtered = movies.filter(m => 
-      m.titleFa.toLowerCase().includes(q) ||
-      m.titleEn.toLowerCase().includes(q) ||
-      m.genre.toLowerCase().includes(q)
-    );
-    renderMovies(filtered);
-  });
 
-  renderMovies(movies);
-</script>
+    function refreshAdsList(){
+      let list=document.getElementById('ads-list'); list.innerHTML='';
+      for(let i=1;i<=5;i++){
+        let d=document.createElement('div'); d.textContent='تبلیغ '+i;
+        if(ads[i-1]) d.classList.add('selected');
+        d.onclick=()=>{
+          document.getElementById('ads-num').value=i;
+          let it=ads[i-1]||{text:'',link:'',images:[]};
+          document.getElementById('ads-text').value=it.text;
+          document.getElementById('ads-link').value=it.link;
+        };
+        list.appendChild(d);
+      }
+    }
+    function saveAds(){
+      let n=+document.getElementById('ads-num').value;
+      if(n<1||n>5){alert('شماره نامعتبر');return;}
+      let t=document.getElementById('ads-text').value.trim();
+      let l=document.getElementById('ads-link').value.trim();
+      let files=document.getElementById('ads-images').files, imgs=[];
+      for(let f of files) imgs.push(URL.createObjectURL(f));
+      ads[n-1]={text:t,link:l,images:imgs};
+      saveData(); renderMain(); refreshAdsList();
+    }
+    function deleteAds(){
+      let n=+document.getElementById('ads-num').value;
+      ads[n-1]=null; saveData(); renderMain(); refreshAdsList();
+    }
 
+    function toggleAds(){
+      showAdsFlag=document.getElementById('toggle-ads').checked;
+      saveData(); renderMain();
+    }
+
+    function toggleUserChat(){
+      const c=document.getElementById('user-chat');
+      c.style.display=c.style.display==='flex'?'none':'flex';
+    }
+    function sendUserMessage(){
+      let txt=document.getElementById('userMessage').value.trim();
+      if(!txt){alert('پیام خالی');return;}
+      let u=localStorage.getItem('randomUser')||('کاربر_'+Math.floor(Math.random()*100000));
+      localStorage.setItem('randomUser',u);
+      const now=new Date().toLocaleTimeString('fa-IR');
+      let e=chats.find(c=>c.user===u);
+      if(!e){e={user:u,messages:[]};chats.push(e);}
+      e.messages.push({from:'user',text:txt,time:now});
+      saveData();document.getElementById('userMessage').value='';
+      renderUserChat();refreshUserList();
+    }
+    function renderUserChat(){
+      const u=localStorage.getItem('randomUser');
+      const h=document.getElementById('user-chat-history');
+      h.innerHTML=''; if(!u)return;
+      const e=chats.find(c=>c.user===u); if(!e)return;
+      e.messages.forEach(m=>{
+        let p=document.createElement('p');
+        p.innerHTML=`<strong>${m.from==='admin'?'مدیریت':u}</strong> (${m.time}): ${m.text}`;
+        h.appendChild(p);
+      });
+      h.scrollTop=h.scrollHeight;
+    }
+
+    let selectedUser=null;
+    function refreshUserList(){
+      const ul=document.getElementById('admin-user-list');ul.innerHTML='';
+      chats.forEach(c=>{
+        const d=document.createElement('div');d.textContent=c.user;
+        d.onclick=()=>selectUser(c.user);
+        if(c.user===selectedUser)d.classList.add('selected');
+        ul.appendChild(d);
+      });
+    }
+    function selectUser(u){
+      selectedUser=u;refreshUserList();renderChatHistory(u);
+    }
+    function renderChatHistory(u){
+      const hd=document.getElementById('admin-chat-history');hd.innerHTML='';
+      const e=chats.find(c=>c.user===u);if(!e)return;
+      e.messages.forEach(m=>{
+        const p=document.createElement('p');
+        p.innerHTML=`<strong>${m.from==='admin'?'مدیریت':u}</strong> (${m.time}): ${m.text}`;
+        hd.appendChild(p);
+      });
+      hd.scrollTop=hd.scrollHeight;
+    }
+    function sendAdminMessage(){
+      if(!selectedUser){alert('یک کاربر انتخاب کنید');return;}
+      let txt=document.getElementById('admin-reply').value.trim();
+      if(!txt){alert('متن پیام خالی است');return;}
+      const now=new Date().toLocaleTimeString('fa-IR');
+      let e=chats.find(c=>c.user===selectedUser);
+      if(!e){e={user:selectedUser,messages:[]};chats.push(e);}
+      e.messages.push({from:'admin',text:txt,time:now});
+      saveData();document.getElementById('admin-reply').value='';renderChatHistory(selectedUser);
+      if(localStorage.getItem('randomUser')===selectedUser) renderUserChat();
+    }
+
+    function toggleAdminPanel(){
+      const p=document.getElementById('admin-panel');
+      p.style.display=p.style.display==='block'?'none':'block';
+    }
+    function adminLogin(){
+      let pw=document.getElementById('admin-password').value;
+      let cap=+document.getElementById('admin-captcha').value;
+      if(pw==='kamali 1389 1400' && cap===capA+capB){
+        document.getElementById('login-section').style.display='none';
+        document.getElementById('management-section').style.display='block';
+        refreshContentList();refreshAdsList();refreshUserList();renderMain();renderUserChat();
+      } else alert('رمز یا کپچا اشتباه است');
+    }
+    function adminLogout(){
+      document.getElementById('login-section').style.display='block';
+      document.getElementById('management-section').style.display='none';
+      document.getElementById('admin-panel').style.display='none';
+    }
+
+    document.getElementById('toggle-ads').checked=showAdsFlag;
+    renderMain();renderUserChat();
+  </script>
 </body>
 </html>
