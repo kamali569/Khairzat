@@ -4,32 +4,52 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <!-- 1. عنوان و توضیح -->
+  <!-- 1. فاوآیکون -->
+  <!-- فرض بر این است فایل 1212.png کنار index.html قرار دارد -->
+  <link rel="icon" href="1212.png" type="image/png" />
+  <link rel="apple-touch-icon" href="1212.png" />
+
+  <!-- 2. عنوان و توضیح -->
   <title>خبرزات – آخرین اخبار روز</title>
   <meta name="description" content="خبرزات | مرجع اخبار ایران و جهان. با ما همیشه به‌روز باشید." />
 
-  <!-- 2. Open Graph -->
+  <!-- 3. Open Graph -->
   <meta property="og:title" content="خبرزات – آخرین اخبار روز" />
   <meta property="og:description" content="خبرزات | مرجع اخبار ایران و جهان. با ما همیشه به‌روز باشید." />
-  <meta property="og:image" content="./1212.png" />
+  <meta property="og:image" content="https://kamali569.github.io/Khairzat/1212.png" />
   <meta property="og:image:alt" content="آیکون میکروفن برای خبرزات" />
-  <meta property="og:url" content="https://youruser.github.io/khabrozat-site/" />
+  <meta property="og:url" content="https://kamali569.github.io/Khairzat/" />
   <meta property="og:type" content="website" />
 
-  <!-- 3. Twitter Card -->
+  <!-- 4. Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="خبرزات – آخرین اخبار روز" />
   <meta name="twitter:description" content="خبرزات | مرجع اخبار ایران و جهان. با ما همیشه به‌روز باشید." />
-  <meta name="twitter:image" content="./1212.png" />
+  <meta name="twitter:image" content="https://kamali569.github.io/Khairzat/1212.png" />
 
-  <!-- 4. JSON-LD ساختارمند -->
+  <!-- 5. JSON-LD برای Organization -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "url": "https://kamali569.github.io/Khairzat/",
+    "logo": "https://kamali569.github.io/Khairzat/1212.png",
+    "name": "خبرزات",
+    "sameAs": [
+      "https://www.instagram.com/YourInstaProfile",
+      "https://twitter.com/YourTwitterProfile"
+    ]
+  }
+  </script>
+
+  <!-- 6. JSON-LD برای NewsArticle -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "NewsArticle",
     "headline": "خبرزات – مرجع اخبار ایران و جهان",
     "description": "خبرزات | مرجع اخبار ایران و جهان. با ما همیشه به‌روز باشید.",
-    "image": ["./1212.png"],
+    "image": ["https://kamali569.github.io/Khairzat/1212.png"],
     "datePublished": "2025-05-30T08:00:00+03:30",
     "dateModified": "2025-05-30T08:00:00+03:30",
     "publisher": {
@@ -37,7 +57,7 @@
       "name": "خبرزات",
       "logo": {
         "@type": "ImageObject",
-        "url": "./1212.png"
+        "url": "https://kamali569.github.io/Khairzat/1212.png"
       }
     },
     "author": {
@@ -49,99 +69,213 @@
 
   <!-- CSS و استایل‌ها -->
   <style>
-    body { margin:0; font-family:Tahoma,sans-serif; direction:rtl;
-      background:linear-gradient(45deg,red,orange,yellow,green,cyan,blue,violet);
-      background-size:600% 600%; animation:rainbow 30s linear infinite; }
-    @keyframes rainbow {0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+    body { 
+      margin: 0; 
+      font-family: Tahoma, sans-serif; 
+      direction: rtl;
+      background: linear-gradient(45deg, red, orange, yellow, green, cyan, blue, violet);
+      background-size: 600% 600%; 
+      animation: rainbow 30s linear infinite; 
+    }
+    @keyframes rainbow { 
+      0% { background-position: 0% 50%; } 
+      50% { background-position: 100% 50%; } 
+      100% { background-position: 0% 50%; } 
+    }
 
     .content, .ads {
-      width:70%; margin:20px auto; background:#fff; padding:15px;
-      border-radius:8px; box-shadow:0 0 10px rgba(0,0,0,0.2); min-height:200px;
+      width: 70%; 
+      margin: 20px auto; 
+      background: #fff; 
+      padding: 15px;
+      border-radius: 8px; 
+      box-shadow: 0 0 10px rgba(0,0,0,0.2); 
+      min-height: 200px;
     }
-    .content h2, .ads h2 { margin-top:0; }
+    .content h2, .ads h2 { 
+      margin-top: 0; 
+    }
 
     #floating-circle {
-      position:fixed; bottom:20px; right:20px; width:50px; height:50px;
-      background:rgba(255,255,255,0.7); border-radius:50%; display:flex;
-      align-items:center; justify-content:center; cursor:pointer; z-index:1000;
+      position: fixed; 
+      bottom: 20px; 
+      right: 20px; 
+      width: 50px; 
+      height: 50px;
+      background: rgba(255,255,255,0.7); 
+      border-radius: 50%; 
+      display: flex;
+      align-items: center; 
+      justify-content: center; 
+      cursor: pointer; 
+      z-index: 1000;
     }
 
     #admin-panel {
-      display:none; position:fixed; top:10px; left:50%; transform:translateX(-50%);
-      width:380px; background:#fff; padding:15px; border-radius:8px;
-      box-shadow:0 0 15px rgba(0,0,0,0.3); z-index:1001;
+      display: none; 
+      position: fixed; 
+      top: 10px; 
+      left: 50%; 
+      transform: translateX(-50%);
+      width: 380px; 
+      background: #fff; 
+      padding: 15px; 
+      border-radius: 8px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.3); 
+      z-index: 1001;
     }
-    #admin-panel h3 { margin-top:0; }
+    #admin-panel h3 { 
+      margin-top: 0; 
+    }
     #admin-panel .tab-buttons button {
-      margin:3px; padding:5px 10px; border:none; background:#ddd;
-      cursor:pointer; border-radius:4px;
+      margin: 3px; 
+      padding: 5px 10px; 
+      border: none; 
+      background: #ddd;
+      cursor: pointer; 
+      border-radius: 4px;
     }
     #admin-panel .tab-buttons button.active {
-      background:#c33; color:#fff;
+      background: #c33; 
+      color: #fff;
     }
-    #admin-panel .tab-content { display:none; margin-top:10px; }
-    #admin-panel .tab-content.active { display:block; }
-    #admin-panel input, #admin-panel textarea {
-      width:calc(100% - 12px); padding:5px; margin-bottom:6px; box-sizing:border-box;
+    #admin-panel .tab-content { 
+      display: none; 
+      margin-top: 10px; 
     }
-    #admin-panel input[type="file"] { margin-bottom:6px; }
+    #admin-panel .tab-content.active { 
+      display: block; 
+    }
+    #admin-panel input, 
+    #admin-panel textarea {
+      width: calc(100% - 12px); 
+      padding: 5px; 
+      margin-bottom: 6px; 
+      box-sizing: border-box;
+    }
+    #admin-panel input[type="file"] { 
+      margin-bottom: 6px; 
+    }
     #admin-panel .item-list {
-      max-height:120px; overflow-y:auto; border:1px solid #ccc;
-      padding:4px; margin-bottom:6px; border-radius:4px;
+      max-height: 120px; 
+      overflow-y: auto; 
+      border: 1px solid #ccc;
+      padding: 4px; 
+      margin-bottom: 6px; 
+      border-radius: 4px;
     }
     #admin-panel .item-list div {
-      padding:4px; cursor:pointer; border-bottom:1px solid #eee;
+      padding: 4px; 
+      cursor: pointer; 
+      border-bottom: 1px solid #eee;
     }
     #admin-panel .item-list .selected {
-      background:#f8d7da; color:#721c24;
+      background: #f8d7da; 
+      color: #721c24;
     }
     #admin-panel button {
-      border:none; padding:6px 12px; cursor:pointer;
-      border-radius:4px; margin-right:4px;
+      border: none; 
+      padding: 6px 12px; 
+      cursor: pointer;
+      border-radius: 4px; 
+      margin-right: 4px;
     }
-    #admin-panel .save-btn { background:#28a745; color:#fff; }
-    #admin-panel .delete-btn { background:#dc3545; color:#fff; }
+    #admin-panel .save-btn { 
+      background: #28a745; 
+      color: #fff; 
+    }
+    #admin-panel .delete-btn { 
+      background: #dc3545; 
+      color: #fff; 
+    }
     #admin-panel .logout-btn {
-      background:#333; color:#fff; width:100%; margin-top:10px;
+      background: #333; 
+      color: #fff; 
+      width: 100%; 
+      margin-top: 10px;
     }
 
     .slider-container {
-      position:relative; overflow:hidden; width:100%; height:200px; margin-top:10px;
+      position: relative; 
+      overflow: hidden; 
+      width: 100%; 
+      height: 200px; 
+      margin-top: 10px;
     }
     .slider-container img {
-      width:100%; height:100%; object-fit:cover; position:absolute;
-      top:0; left:0; opacity:0; transition:opacity 1s ease-in-out;
+      width: 100%; 
+      height: 100%; 
+      object-fit: cover; 
+      position: absolute;
+      top: 0; 
+      left: 0; 
+      opacity: 0; 
+      transition: opacity 1s ease-in-out;
     }
-    .slider-container img.active { opacity:1; }
+    .slider-container img.active { 
+      opacity: 1; 
+    }
 
     #ad-info {
-      text-align:center; background:#fff; padding:10px; margin:20px auto 0;
-      width:70%; font-size:14px; color:#333; box-shadow:0 -1px 5px rgba(0,0,0,0.1);
-      border-radius:8px;
+      text-align: center; 
+      background: #fff; 
+      padding: 10px; 
+      margin: 20px auto 0;
+      width: 70%; 
+      font-size: 14px; 
+      color: #333; 
+      box-shadow: 0 -1px 5px rgba(0,0,0,0.1);
+      border-radius: 8px;
     }
 
     #user-chat-wrapper {
-      position:fixed; bottom:0; left:0; width:100%; z-index:999;
-      display:flex; flex-direction:column; align-items:flex-end;
+      position: fixed; 
+      bottom: 0; 
+      left: 0; 
+      width: 100%; 
+      z-index: 999;
+      display: flex; 
+      flex-direction: column; 
+      align-items: flex-end;
     }
     #chat-toggle-btn {
-      background:#007bff; color:#fff; border:none; padding:6px 12px;
-      cursor:pointer; border-radius:4px 4px 0 0;
+      background: #007bff; 
+      color: #fff; 
+      border: none; 
+      padding: 6px 12px;
+      cursor: pointer; 
+      border-radius: 4px 4px 0 0;
     }
     #user-chat {
-      display:none; width:100%; background:rgba(255,255,255,0.9);
-      padding:8px; box-shadow:0 -2px 6px rgba(0,0,0,0.2); flex-direction:column;
+      display: none; 
+      width: 100%; 
+      background: rgba(255,255,255,0.9);
+      padding: 8px; 
+      box-shadow: 0 -2px 6px rgba(0,0,0,0.2); 
+      flex-direction: column;
     }
     #user-chat-history {
-      max-height:120px; overflow-y:auto; border:1px solid #ccc;
-      margin-bottom:6px; padding:4px; background:#fff;
+      max-height: 120px; 
+      overflow-y: auto; 
+      border: 1px solid #ccc;
+      margin-bottom: 6px; 
+      padding: 4px; 
+      background: #fff;
     }
     #user-chat textarea {
-      flex:1; resize:none; padding:5px;
+      flex: 1; 
+      resize: none; 
+      padding: 5px;
     }
     #user-chat button {
-      align-self:flex-end; width:80px; height:36px; margin-top:4px;
-      background:#007bff; color:#fff; border:none; cursor:pointer;
+      align-self: flex-end; 
+      width: 80px; 
+      height: 36px; 
+      margin-top: 4px;
+      background: #007bff; 
+      color: #fff; 
+      border: none; 
+      cursor: pointer;
     }
   </style>
 </head>
@@ -161,9 +295,9 @@
 
   <!-- اطلاع‌رسانی تبلیغات -->
   <div id="ad-info">
-    برای خرید امکان تبلیغ از نسخه‌های <strong>طلایی (۵۰٬۰۰۰ تومان)</strong>،
-    <strong>نقره‌ای (۳۵٬۰۰۰ تومان)</strong> و
-    <strong>برنزی (۲۰٬۰۰۰ تومان)</strong> در روز،
+    برای خرید امکان تبلیغ از نسخه‌های <strong>طلایی (۵۰٬۰۰۰ تومان)</strong>، 
+    <strong>نقره‌ای (۳۵٬۰۰۰ تومان)</strong> و 
+    <strong>برنزی (۲۰٬۰۰۰ تومان)</strong> در روز، 
     روی دکمه «چت» کلیک کنید و با مدیریت گفتگو نمایید.
   </div>
 
@@ -194,8 +328,8 @@
       <h3>پنل مدیریت</h3>
       <div class="tab-buttons">
         <button id="tab-content-btn" class="active" onclick="showTab('content')">محتوا</button>
-        <button id="tab-ads-btn"       onclick="showTab('ads')">تبلیغات</button>
-        <button id="tab-messages-btn"  onclick="showTab('messages')">چت‌ها</button>
+        <button id="tab-ads-btn" onclick="showTab('ads')">تبلیغات</button>
+        <button id="tab-messages-btn" onclick="showTab('messages')">چت‌ها</button>
       </div>
 
       <label><input type="checkbox" id="toggle-ads" checked onchange="toggleAds()"> نمایش تبلیغات</label>
@@ -358,7 +492,7 @@
       }
     }
 
-    // به‌روزرسانی لیست خبرها در پنل مدیریت (نمایش وضعیت پر or خالی بودن)
+    // به‌روزرسانی لیست خبرها در پنل مدیریت (نمایش وضعیت پر یا خالی بودن)
     function refreshContentList() {
       let list = document.getElementById('content-list');
       list.innerHTML = '';
@@ -388,7 +522,7 @@
       let files = document.getElementById('content-images').files;
 
       if (files.length === 0) {
-        // اگر عکسی انتخاب نشود، فقط متن و لینک رو ذخیره کن
+        // اگر عکسی انتخاب نشود، فقط متن و لینک را ذخیره کن
         contents[n - 1] = { text: t, link: l, images: [] };
         saveData();
         renderMain();
@@ -402,7 +536,7 @@
             base64List.push(dataURL);
             count++;
             if (count === files.length) {
-              // وقتی همهٔ عکس‌ها تبدیل شد، ذخیره کن
+              // وقتی همهٔ عکس‌ها تبدیل شدند، ذخیره کن
               contents[n - 1] = { text: t, link: l, images: base64List };
               saveData();
               renderMain();
