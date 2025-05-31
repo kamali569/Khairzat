@@ -200,6 +200,7 @@
 
       <label><input type="checkbox" id="toggle-ads" checked onchange="toggleAds()"> نمایش تبلیغات</label>
 
+      <!-- تب محتوا -->
       <div id="tab-content" class="tab-content active">
         <label>شماره (1 تا 20):</label>
         <input type="number" id="content-num" min="1" max="20" />
@@ -211,6 +212,7 @@
         <div class="item-list" id="content-list"></div>
       </div>
 
+      <!-- تب تبلیغات -->
       <div id="tab-ads" class="tab-content">
         <label>شماره (1 تا 5):</label><input type="number" id="ads-num" min="1" max="5" />
         <label>متن تبلیغ:</label><textarea id="ads-text"></textarea>
@@ -221,6 +223,7 @@
         <div class="item-list" id="ads-list"></div>
       </div>
 
+      <!-- تب چت‌ها -->
       <div id="tab-messages" class="tab-content">
         <h4>گفت‌وگوهای کاربران</h4>
         <div class="item-list" id="admin-user-list" style="max-height:100px;"></div>
@@ -234,6 +237,7 @@
   </div>
 
   <script>
+    // داده‌ها
     let contents = JSON.parse(localStorage.getItem('contents') || '[]');
     let ads      = JSON.parse(localStorage.getItem('ads')      || '[]');
     let chats    = JSON.parse(localStorage.getItem('chatData') || '[]');
@@ -244,230 +248,372 @@
     document.getElementById('cap-a').innerText = capA;
     document.getElementById('cap-b').innerText = capB;
 
+    // تبدیل فایل تصویری به Base64 و برگشت رشتهٔ Base64 در callback
+    function fileToBase64(file, callback) {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        callback(e.target.result.toString()); // مثل "data:image/png;base64,...."
+      };
+      reader.readAsDataURL(file);
+    }
+
+    // ذخیرهٔ داده‌ها در localStorage
+    function saveData() {
+      localStorage.setItem('contents', JSON.stringify(contents));
+      localStorage.setItem('ads', JSON.stringify(ads));
+      localStorage.setItem('chatData', JSON.stringify(chats));
+      localStorage.setItem('showAds', JSON.stringify(showAdsFlag));
+    }
+
+    // رندر کردن کل وب‌سایت (اخبار + تبلیغات)
     function renderMain() {
+      // نمایش اخبار
       const mC = document.getElementById('mainContent');
       mC.innerHTML = '';
-      contents.forEach(item=>{
-        if(!item) return;
-        let div=document.createElement('div'); div.style.marginBottom='15px';
-        let h=document.createElement('h4');
-        if(item.link){ let a=document.createElement('a'); a.href=item.link; a.target='_blank'; a.textContent=item.text; h.appendChild(a); }
-        else h.textContent=item.text;
+      contents.forEach(item => {
+        if (!item) return;
+        let div = document.createElement('div');
+        div.style.marginBottom = '15px';
+        let h = document.createElement('h4');
+        if (item.link) {
+          let a = document.createElement('a');
+          a.href = item.link;
+          a.target = '_blank';
+          a.textContent = item.text;
+          h.appendChild(a);
+        } else {
+          h.textContent = item.text;
+        }
         div.appendChild(h);
-        if(item.images && item.images.length){
-          let slider=document.createElement('div'); slider.className='slider-container';
-          item.images.forEach((src,i)=>{
-            let img=document.createElement('img'); img.src=src;
-            if(i===0) img.classList.add('active');
+
+        // اگر تصاویر در قالب Base64 وجود داشته باشند، اسلایدر بساز
+        if (item.images && item.images.length) {
+          let slider = document.createElement('div');
+          slider.className = 'slider-container';
+          item.images.forEach((dataURL, i) => {
+            let img = document.createElement('img');
+            img.src = dataURL;           // data:image/png;base64,....
+            if (i === 0) img.classList.add('active');
             slider.appendChild(img);
           });
           div.appendChild(slider);
-          let idx=0,imgEls=slider.querySelectorAll('img');
-          setInterval(()=>{
+
+          // اسلاید ۴ ثانیه‌ای
+          let idx = 0;
+          let imgEls = slider.querySelectorAll('img');
+          setInterval(() => {
             imgEls[idx].classList.remove('active');
-            idx=(idx+1)%imgEls.length;
+            idx = (idx + 1) % imgEls.length;
             imgEls[idx].classList.add('active');
-          },4000);
+          }, 4000);
         }
         mC.appendChild(div);
       });
 
-      const adsSection=document.getElementById('adsSection');
-      if(showAdsFlag){
-        adsSection.style.display='block';
-        const mA=document.getElementById('mainAds');
-        mA.innerHTML='';
-        ads.forEach(item=>{
-          if(!item) return;
-          let div=document.createElement('div'); div.style.marginBottom='10px';
-          let p=document.createElement('p');
-          if(item.link){ let a=document.createElement('a'); a.href=item.link; a.target='_blank'; a.textContent=item.text; p.appendChild(a); }
-          else p.textContent=item.text;
+      // نمایش تبلیغات (یا مخفی‌سازی اگر تیک نبود)
+      const adsSection = document.getElementById('adsSection');
+      if (showAdsFlag) {
+        adsSection.style.display = 'block';
+        const mA = document.getElementById('mainAds');
+        mA.innerHTML = '';
+        ads.forEach(item => {
+          if (!item) return;
+          let div = document.createElement('div');
+          div.style.marginBottom = '10px';
+          let p = document.createElement('p');
+          if (item.link) {
+            let a = document.createElement('a');
+            a.href = item.link;
+            a.target = '_blank';
+            a.textContent = item.text;
+            p.appendChild(a);
+          } else {
+            p.textContent = item.text;
+          }
           div.appendChild(p);
-          if(item.images && item.images.length){
-            let slider=document.createElement('div'); slider.className='slider-container';
-            item.images.forEach((src,i)=>{
-              let img=document.createElement('img'); img.src=src;
-              if(i===0) img.classList.add('active');
+
+          if (item.images && item.images.length) {
+            let slider = document.createElement('div');
+            slider.className = 'slider-container';
+            item.images.forEach((dataURL, i) => {
+              let img = document.createElement('img');
+              img.src = dataURL;
+              if (i === 0) img.classList.add('active');
               slider.appendChild(img);
             });
             div.appendChild(slider);
-            let idx=0,imgEls=slider.querySelectorAll('img');
-            setInterval(()=>{
+
+            let idx = 0;
+            let imgEls = slider.querySelectorAll('img');
+            setInterval(() => {
               imgEls[idx].classList.remove('active');
-              idx=(idx+1)%imgEls.length;
+              idx = (idx + 1) % imgEls.length;
               imgEls[idx].classList.add('active');
-            },4000);
+            }, 4000);
           }
           mA.appendChild(div);
         });
-      } else adsSection.style.display='none';
+      } else {
+        adsSection.style.display = 'none';
+      }
     }
 
-    function saveData(){
-      localStorage.setItem('contents',JSON.stringify(contents));
-      localStorage.setItem('ads',JSON.stringify(ads));
-      localStorage.setItem('chatData',JSON.stringify(chats));
-      localStorage.setItem('showAds',JSON.stringify(showAdsFlag));
-    }
-
-    function showTab(name){
-      ['content','ads','messages'].forEach(t=>{
-        document.getElementById('tab-'+t).classList.remove('active');
-        document.getElementById('tab-'+t+'-btn').classList.remove('active');
-      });
-      document.getElementById('tab-'+name).classList.add('active');
-      document.getElementById('tab-'+name+'-btn').classList.add('active');
-    }
-
-    function refreshContentList(){
-      let list=document.getElementById('content-list'); list.innerHTML='';
-      for(let i=1;i<=20;i++){
-        let d=document.createElement('div'); d.textContent='خبر '+i;
-        if(contents[i-1]) d.classList.add('selected');
-        d.onclick=()=>{
-          document.getElementById('content-num').value=i;
-          let it=contents[i-1]||{text:'',link:'',images:[]};
-          document.getElementById('content-text').value=it.text;
-          document.getElementById('content-link').value=it.link;
+    // به‌روزرسانی لیست خبرها در پنل مدیریت (نمایش وضعیت پر or خالی بودن)
+    function refreshContentList() {
+      let list = document.getElementById('content-list');
+      list.innerHTML = '';
+      for (let i = 1; i <= 20; i++) {
+        let d = document.createElement('div');
+        d.textContent = 'خبر ' + i;
+        if (contents[i - 1]) d.classList.add('selected');
+        d.onclick = () => {
+          document.getElementById('content-num').value = i;
+          let it = contents[i - 1] || { text: '', link: '', images: [] };
+          document.getElementById('content-text').value = it.text;
+          document.getElementById('content-link').value = it.link;
         };
         list.appendChild(d);
       }
     }
-    function saveContent(){
-      let n=+document.getElementById('content-num').value;
-      if(n<1||n>20){alert('شماره نامعتبر');return;}
-      let t=document.getElementById('content-text').value.trim();
-      let l=document.getElementById('content-link').value.trim();
-      let files=document.getElementById('content-images').files, imgs=[];
-      for(let f of files) imgs.push(URL.createObjectURL(f));
-      contents[n-1]={text:t,link:l,images:imgs};
-      saveData(); renderMain(); refreshContentList();
-    }
-    function deleteContent(){
-      let n=+document.getElementById('content-num').value;
-      contents[n-1]=null; saveData(); renderMain(); refreshContentList();
+
+    // ذخیره یا بروزرسانی یک خبر (تبدیل تصاویر انتخاب‌شده به Base64)
+    function saveContent() {
+      let n = +document.getElementById('content-num').value;
+      if (n < 1 || n > 20) {
+        alert('شماره نامعتبر');
+        return;
+      }
+      let t = document.getElementById('content-text').value.trim();
+      let l = document.getElementById('content-link').value.trim();
+      let files = document.getElementById('content-images').files;
+
+      if (files.length === 0) {
+        // اگر عکسی انتخاب نشود، فقط متن و لینک رو ذخیره کن
+        contents[n - 1] = { text: t, link: l, images: [] };
+        saveData();
+        renderMain();
+        refreshContentList();
+      } else {
+        // اگر یک یا چند عکس انتخاب شد، اول به Base64 تبدیل‌شان کن
+        let base64List = [];
+        let count = 0;
+        for (let f of files) {
+          fileToBase64(f, (dataURL) => {
+            base64List.push(dataURL);
+            count++;
+            if (count === files.length) {
+              // وقتی همهٔ عکس‌ها تبدیل شد، ذخیره کن
+              contents[n - 1] = { text: t, link: l, images: base64List };
+              saveData();
+              renderMain();
+              refreshContentList();
+            }
+          });
+        }
+      }
     }
 
-    function refreshAdsList(){
-      let list=document.getElementById('ads-list'); list.innerHTML='';
-      for(let i=1;i<=5;i++){
-        let d=document.createElement('div'); d.textContent='تبلیغ '+i;
-        if(ads[i-1]) d.classList.add('selected');
-        d.onclick=()=>{
-          document.getElementById('ads-num').value=i;
-          let it=ads[i-1]||{text:'',link:'',images:[]};
-          document.getElementById('ads-text').value=it.text;
-          document.getElementById('ads-link').value=it.link;
+    // حذف یک خبر
+    function deleteContent() {
+      let n = +document.getElementById('content-num').value;
+      contents[n - 1] = null;
+      saveData();
+      renderMain();
+      refreshContentList();
+    }
+
+    // به‌روزرسانی لیست تبلیغات در پنل مدیریت
+    function refreshAdsList() {
+      let list = document.getElementById('ads-list');
+      list.innerHTML = '';
+      for (let i = 1; i <= 5; i++) {
+        let d = document.createElement('div');
+        d.textContent = 'تبلیغ ' + i;
+        if (ads[i - 1]) d.classList.add('selected');
+        d.onclick = () => {
+          document.getElementById('ads-num').value = i;
+          let it = ads[i - 1] || { text: '', link: '', images: [] };
+          document.getElementById('ads-text').value = it.text;
+          document.getElementById('ads-link').value = it.link;
         };
         list.appendChild(d);
       }
     }
-    function saveAds(){
-      let n=+document.getElementById('ads-num').value;
-      if(n<1||n>5){alert('شماره نامعتبر');return;}
-      let t=document.getElementById('ads-text').value.trim();
-      let l=document.getElementById('ads-link').value.trim();
-      let files=document.getElementById('ads-images').files, imgs=[];
-      for(let f of files) imgs.push(URL.createObjectURL(f));
-      ads[n-1]={text:t,link:l,images:imgs};
-      saveData(); renderMain(); refreshAdsList();
-    }
-    function deleteAds(){
-      let n=+document.getElementById('ads-num').value;
-      ads[n-1]=null; saveData(); renderMain(); refreshAdsList();
+
+    // ذخیره یا بروزرسانی یک تبلیغ (تبدیل تصاویر انتخاب‌شده به Base64)
+    function saveAds() {
+      let n = +document.getElementById('ads-num').value;
+      if (n < 1 || n > 5) {
+        alert('شماره نامعتبر');
+        return;
+      }
+      let t = document.getElementById('ads-text').value.trim();
+      let l = document.getElementById('ads-link').value.trim();
+      let files = document.getElementById('ads-images').files;
+
+      if (files.length === 0) {
+        ads[n - 1] = { text: t, link: l, images: [] };
+        saveData();
+        renderMain();
+        refreshAdsList();
+      } else {
+        let base64List = [];
+        let count = 0;
+        for (let f of files) {
+          fileToBase64(f, (dataURL) => {
+            base64List.push(dataURL);
+            count++;
+            if (count === files.length) {
+              ads[n - 1] = { text: t, link: l, images: base64List };
+              saveData();
+              renderMain();
+              refreshAdsList();
+            }
+          });
+        }
+      }
     }
 
-    function toggleAds(){
-      showAdsFlag=document.getElementById('toggle-ads').checked;
-      saveData(); renderMain();
+    // حذف یک تبلیغ
+    function deleteAds() {
+      let n = +document.getElementById('ads-num').value;
+      ads[n - 1] = null;
+      saveData();
+      renderMain();
+      refreshAdsList();
     }
 
-    function toggleUserChat(){
-      const c=document.getElementById('user-chat');
-      c.style.display=c.style.display==='flex'?'none':'flex';
+    // کنترل نمایش یا مخفی‌سازی بخش تبلیغات
+    function toggleAds() {
+      showAdsFlag = document.getElementById('toggle-ads').checked;
+      saveData();
+      renderMain();
     }
-    function sendUserMessage(){
-      let txt=document.getElementById('userMessage').value.trim();
-      if(!txt){alert('پیام خالی');return;}
-      let u=localStorage.getItem('randomUser')||('کاربر_'+Math.floor(Math.random()*100000));
-      localStorage.setItem('randomUser',u);
-      const now=new Date().toLocaleTimeString('fa-IR');
-      let e=chats.find(c=>c.user===u);
-      if(!e){e={user:u,messages:[]};chats.push(e);}
-      e.messages.push({from:'user',text:txt,time:now});
-      saveData();document.getElementById('userMessage').value='';
-      renderUserChat();refreshUserList();
+
+    // چت کاربران: نمایش یا پنهان‌سازی
+    function toggleUserChat() {
+      const chat = document.getElementById('user-chat');
+      chat.style.display = chat.style.display === 'flex' ? 'none' : 'flex';
     }
-    function renderUserChat(){
-      const u=localStorage.getItem('randomUser');
-      const h=document.getElementById('user-chat-history');
-      h.innerHTML=''; if(!u)return;
-      const e=chats.find(c=>c.user===u); if(!e)return;
-      e.messages.forEach(m=>{
-        let p=document.createElement('p');
-        p.innerHTML=`<strong>${m.from==='admin'?'مدیریت':u}</strong> (${m.time}): ${m.text}`;
+    function sendUserMessage() {
+      let txt = document.getElementById('userMessage').value.trim();
+      if (!txt) {
+        alert('پیام خالی');
+        return;
+      }
+      let u = localStorage.getItem('randomUser') || ('کاربر_' + Math.floor(Math.random() * 100000));
+      localStorage.setItem('randomUser', u);
+      const now = new Date().toLocaleTimeString('fa-IR');
+      let e = chats.find(c => c.user === u);
+      if (!e) {
+        e = { user: u, messages: [] };
+        chats.push(e);
+      }
+      e.messages.push({ from: 'user', text: txt, time: now });
+      saveData();
+      document.getElementById('userMessage').value = '';
+      renderUserChat();
+      refreshUserList();
+    }
+    function renderUserChat() {
+      const u = localStorage.getItem('randomUser');
+      const h = document.getElementById('user-chat-history');
+      h.innerHTML = '';
+      if (!u) return;
+      const e = chats.find(c => c.user === u);
+      if (!e) return;
+      e.messages.forEach(m => {
+        let p = document.createElement('p');
+        p.innerHTML = `<strong>${m.from === 'admin' ? 'مدیریت' : u}</strong> (${m.time}): ${m.text}`;
         h.appendChild(p);
       });
-      h.scrollTop=h.scrollHeight;
+      h.scrollTop = h.scrollHeight;
     }
 
-    let selectedUser=null;
-    function refreshUserList(){
-      const ul=document.getElementById('admin-user-list');ul.innerHTML='';
-      chats.forEach(c=>{
-        const d=document.createElement('div');d.textContent=c.user;
-        d.onclick=()=>selectUser(c.user);
-        if(c.user===selectedUser)d.classList.add('selected');
+    // پنل مدیریت چت
+    let selectedUser = null;
+    function refreshUserList() {
+      const ul = document.getElementById('admin-user-list');
+      ul.innerHTML = '';
+      chats.forEach(c => {
+        const d = document.createElement('div');
+        d.textContent = c.user;
+        d.onclick = () => selectUser(c.user);
+        if (c.user === selectedUser) d.classList.add('selected');
         ul.appendChild(d);
       });
     }
-    function selectUser(u){
-      selectedUser=u;refreshUserList();renderChatHistory(u);
+    function selectUser(u) {
+      selectedUser = u;
+      refreshUserList();
+      renderChatHistory(u);
     }
-    function renderChatHistory(u){
-      const hd=document.getElementById('admin-chat-history');hd.innerHTML='';
-      const e=chats.find(c=>c.user===u);if(!e)return;
-      e.messages.forEach(m=>{
-        const p=document.createElement('p');
-        p.innerHTML=`<strong>${m.from==='admin'?'مدیریت':u}</strong> (${m.time}): ${m.text}`;
+    function renderChatHistory(u) {
+      const hd = document.getElementById('admin-chat-history');
+      hd.innerHTML = '';
+      const e = chats.find(c => c.user === u);
+      if (!e) return;
+      e.messages.forEach(m => {
+        const p = document.createElement('p');
+        p.innerHTML = `<strong>${m.from === 'admin' ? 'مدیریت' : u}</strong> (${m.time}): ${m.text}`;
         hd.appendChild(p);
       });
-      hd.scrollTop=hd.scrollHeight;
+      hd.scrollTop = hd.scrollHeight;
     }
-    function sendAdminMessage(){
-      if(!selectedUser){alert('یک کاربر انتخاب کنید');return;}
-      let txt=document.getElementById('admin-reply').value.trim();
-      if(!txt){alert('متن پیام خالی است');return;}
-      const now=new Date().toLocaleTimeString('fa-IR');
-      let e=chats.find(c=>c.user===selectedUser);
-      if(!e){e={user:selectedUser,messages:[]};chats.push(e);}
-      e.messages.push({from:'admin',text:txt,time:now});
-      saveData();document.getElementById('admin-reply').value='';renderChatHistory(selectedUser);
-      if(localStorage.getItem('randomUser')===selectedUser) renderUserChat();
-    }
-
-    function toggleAdminPanel(){
-      const p=document.getElementById('admin-panel');
-      p.style.display=p.style.display==='block'?'none':'block';
-    }
-    function adminLogin(){
-      let pw=document.getElementById('admin-password').value;
-      let cap=+document.getElementById('admin-captcha').value;
-      if(pw==='kamali 1389 1400' && cap===capA+capB){
-        document.getElementById('login-section').style.display='none';
-        document.getElementById('management-section').style.display='block';
-        refreshContentList();refreshAdsList();refreshUserList();renderMain();renderUserChat();
-      } else alert('رمز یا کپچا اشتباه است');
-    }
-    function adminLogout(){
-      document.getElementById('login-section').style.display='block';
-      document.getElementById('management-section').style.display='none';
-      document.getElementById('admin-panel').style.display='none';
+    function sendAdminMessage() {
+      if (!selectedUser) {
+        alert('یک کاربر انتخاب کنید');
+        return;
+      }
+      let txt = document.getElementById('admin-reply').value.trim();
+      if (!txt) {
+        alert('متن پیام خالی است');
+        return;
+      }
+      const now = new Date().toLocaleTimeString('fa-IR');
+      let e = chats.find(c => c.user === selectedUser);
+      if (!e) {
+        e = { user: selectedUser, messages: [] };
+        chats.push(e);
+      }
+      e.messages.push({ from: 'admin', text: txt, time: now });
+      saveData();
+      document.getElementById('admin-reply').value = '';
+      renderChatHistory(selectedUser);
+      if (localStorage.getItem('randomUser') === selectedUser) renderUserChat();
     }
 
-    document.getElementById('toggle-ads').checked=showAdsFlag;
-    renderMain();renderUserChat();
+    // ورود/خروج مدیر
+    function toggleAdminPanel() {
+      const p = document.getElementById('admin-panel');
+      p.style.display = p.style.display === 'block' ? 'none' : 'block';
+    }
+    function adminLogin() {
+      let pw = document.getElementById('admin-password').value;
+      let cap = +document.getElementById('admin-captcha').value;
+      if (pw === 'kamali 1389 1400' && cap === capA + capB) {
+        document.getElementById('login-section').style.display = 'none';
+        document.getElementById('management-section').style.display = 'block';
+        refreshContentList();
+        refreshAdsList();
+        refreshUserList();
+        renderMain();
+        renderUserChat();
+      } else {
+        alert('رمز یا کپچا اشتباه است');
+      }
+    }
+    function adminLogout() {
+      document.getElementById('login-section').style.display = 'block';
+      document.getElementById('management-section').style.display = 'none';
+      document.getElementById('admin-panel').style.display = 'none';
+    }
+
+    // مقداردهی اولیه
+    document.getElementById('toggle-ads').checked = showAdsFlag;
+    renderMain();
+    renderUserChat();
   </script>
+
 </body>
 </html>
