@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <!-- 1. فاوآیکون -->
-  <!-- فرض بر این است فایل 1212.png کنار index.html قرار دارد -->
   <link rel="icon" href="1212.png" type="image/png" />
   <link rel="apple-touch-icon" href="1212.png" />
 
@@ -69,212 +68,212 @@
 
   <!-- CSS و استایل‌ها -->
   <style>
-    body { 
-      margin: 0; 
-      font-family: Tahoma, sans-serif; 
+    body {
+      margin: 0;
+      font-family: Tahoma, sans-serif;
       direction: rtl;
       background: linear-gradient(45deg, red, orange, yellow, green, cyan, blue, violet);
-      background-size: 600% 600%; 
-      animation: rainbow 30s linear infinite; 
+      background-size: 600% 600%;
+      animation: rainbow 30s linear infinite;
     }
-    @keyframes rainbow { 
-      0% { background-position: 0% 50%; } 
-      50% { background-position: 100% 50%; } 
-      100% { background-position: 0% 50%; } 
+    @keyframes rainbow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
     .content, .ads {
-      width: 70%; 
-      margin: 20px auto; 
-      background: #fff; 
+      width: 70%;
+      margin: 20px auto;
+      background: #fff;
       padding: 15px;
-      border-radius: 8px; 
-      box-shadow: 0 0 10px rgba(0,0,0,0.2); 
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
       min-height: 200px;
     }
-    .content h2, .ads h2 { 
-      margin-top: 0; 
+    .content h2, .ads h2 {
+      margin-top: 0;
     }
 
     #floating-circle {
-      position: fixed; 
-      bottom: 20px; 
-      right: 20px; 
-      width: 50px; 
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 50px;
       height: 50px;
-      background: rgba(255,255,255,0.7); 
-      border-radius: 50%; 
+      background: rgba(255,255,255,0.7);
+      border-radius: 50%;
       display: flex;
-      align-items: center; 
-      justify-content: center; 
-      cursor: pointer; 
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
       z-index: 1000;
     }
 
     #admin-panel {
-      display: none; 
-      position: fixed; 
-      top: 10px; 
-      left: 50%; 
+      display: none;
+      position: fixed;
+      top: 10px;
+      left: 50%;
       transform: translateX(-50%);
-      width: 380px; 
-      background: #fff; 
-      padding: 15px; 
+      width: 380px;
+      background: #fff;
+      padding: 15px;
       border-radius: 8px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.3); 
+      box-shadow: 0 0 15px rgba(0,0,0,0.3);
       z-index: 1001;
     }
-    #admin-panel h3 { 
-      margin-top: 0; 
+    #admin-panel h3 {
+      margin-top: 0;
     }
     #admin-panel .tab-buttons button {
-      margin: 3px; 
-      padding: 5px 10px; 
-      border: none; 
+      margin: 3px;
+      padding: 5px 10px;
+      border: none;
       background: #ddd;
-      cursor: pointer; 
+      cursor: pointer;
       border-radius: 4px;
     }
     #admin-panel .tab-buttons button.active {
-      background: #c33; 
+      background: #c33;
       color: #fff;
     }
-    #admin-panel .tab-content { 
-      display: none; 
-      margin-top: 10px; 
+    #admin-panel .tab-content {
+      display: none;
+      margin-top: 10px;
     }
-    #admin-panel .tab-content.active { 
-      display: block; 
+    #admin-panel .tab-content.active {
+      display: block;
     }
-    #admin-panel input, 
+    #admin-panel input,
     #admin-panel textarea {
-      width: calc(100% - 12px); 
-      padding: 5px; 
-      margin-bottom: 6px; 
+      width: calc(100% - 12px);
+      padding: 5px;
+      margin-bottom: 6px;
       box-sizing: border-box;
     }
-    #admin-panel input[type="file"] { 
-      margin-bottom: 6px; 
+    #admin-panel input[type="file"] {
+      margin-bottom: 6px;
     }
     #admin-panel .item-list {
-      max-height: 120px; 
-      overflow-y: auto; 
+      max-height: 120px;
+      overflow-y: auto;
       border: 1px solid #ccc;
-      padding: 4px; 
-      margin-bottom: 6px; 
+      padding: 4px;
+      margin-bottom: 6px;
       border-radius: 4px;
     }
     #admin-panel .item-list div {
-      padding: 4px; 
-      cursor: pointer; 
+      padding: 4px;
+      cursor: pointer;
       border-bottom: 1px solid #eee;
     }
     #admin-panel .item-list .selected {
-      background: #f8d7da; 
+      background: #f8d7da;
       color: #721c24;
     }
     #admin-panel button {
-      border: none; 
-      padding: 6px 12px; 
+      border: none;
+      padding: 6px 12px;
       cursor: pointer;
-      border-radius: 4px; 
+      border-radius: 4px;
       margin-right: 4px;
     }
-    #admin-panel .save-btn { 
-      background: #28a745; 
-      color: #fff; 
+    #admin-panel .save-btn {
+      background: #28a745;
+      color: #fff;
     }
-    #admin-panel .delete-btn { 
-      background: #dc3545; 
-      color: #fff; 
+    #admin-panel .delete-btn {
+      background: #dc3545;
+      color: #fff;
     }
     #admin-panel .logout-btn {
-      background: #333; 
-      color: #fff; 
-      width: 100%; 
+      background: #333;
+      color: #fff;
+      width: 100%;
       margin-top: 10px;
     }
 
     .slider-container {
-      position: relative; 
-      overflow: hidden; 
-      width: 100%; 
-      height: 200px; 
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+      height: 200px;
       margin-top: 10px;
     }
     .slider-container img {
-      width: 100%; 
-      height: 100%; 
-      object-fit: cover; 
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
       position: absolute;
-      top: 0; 
-      left: 0; 
-      opacity: 0; 
+      top: 0;
+      left: 0;
+      opacity: 0;
       transition: opacity 1s ease-in-out;
     }
-    .slider-container img.active { 
-      opacity: 1; 
+    .slider-container img.active {
+      opacity: 1;
     }
 
     #ad-info {
-      text-align: center; 
-      background: #fff; 
-      padding: 10px; 
+      text-align: center;
+      background: #fff;
+      padding: 10px;
       margin: 20px auto 0;
-      width: 70%; 
-      font-size: 14px; 
-      color: #333; 
+      width: 70%;
+      font-size: 14px;
+      color: #333;
       box-shadow: 0 -1px 5px rgba(0,0,0,0.1);
       border-radius: 8px;
     }
 
     #user-chat-wrapper {
-      position: fixed; 
-      bottom: 0; 
-      left: 0; 
-      width: 100%; 
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
       z-index: 999;
-      display: flex; 
-      flex-direction: column; 
+      display: flex;
+      flex-direction: column;
       align-items: flex-end;
     }
     #chat-toggle-btn {
-      background: #007bff; 
-      color: #fff; 
-      border: none; 
+      background: #007bff;
+      color: #fff;
+      border: none;
       padding: 6px 12px;
-      cursor: pointer; 
+      cursor: pointer;
       border-radius: 4px 4px 0 0;
     }
     #user-chat {
-      display: none; 
-      width: 100%; 
+      display: none;
+      width: 100%;
       background: rgba(255,255,255,0.9);
-      padding: 8px; 
-      box-shadow: 0 -2px 6px rgba(0,0,0,0.2); 
+      padding: 8px;
+      box-shadow: 0 -2px 6px rgba(0,0,0,0.2);
       flex-direction: column;
     }
     #user-chat-history {
-      max-height: 120px; 
-      overflow-y: auto; 
+      max-height: 120px;
+      overflow-y: auto;
       border: 1px solid #ccc;
-      margin-bottom: 6px; 
-      padding: 4px; 
+      margin-bottom: 6px;
+      padding: 4px;
       background: #fff;
     }
     #user-chat textarea {
-      flex: 1; 
-      resize: none; 
+      flex: 1;
+      resize: none;
       padding: 5px;
     }
     #user-chat button {
-      align-self: flex-end; 
-      width: 80px; 
-      height: 36px; 
+      align-self: flex-end;
+      width: 80px;
+      height: 36px;
       margin-top: 4px;
-      background: #007bff; 
-      color: #fff; 
-      border: none; 
+      background: #007bff;
+      color: #fff;
+      border: none;
       cursor: pointer;
     }
   </style>
@@ -295,9 +294,9 @@
 
   <!-- اطلاع‌رسانی تبلیغات -->
   <div id="ad-info">
-    برای خرید امکان تبلیغ از نسخه‌های <strong>طلایی (۵۰٬۰۰۰ تومان)</strong>، 
-    <strong>نقره‌ای (۳۵٬۰۰۰ تومان)</strong> و 
-    <strong>برنزی (۲۰٬۰۰۰ تومان)</strong> در روز، 
+    برای خرید امکان تبلیغ از نسخه‌های <strong>طلایی (۵۰٬۰۰۰ تومان)</strong>،
+    <strong>نقره‌ای (۳۵٬۰۰۰ تومان)</strong> و
+    <strong>برنزی (۲۰٬۰۰۰ تومان)</strong> در روز،
     روی دکمه «چت» کلیک کنید و با مدیریت گفتگو نمایید.
   </div>
 
@@ -374,17 +373,18 @@
     // داده‌ها
     let contents = JSON.parse(localStorage.getItem('contents') || '[]');
     let ads      = JSON.parse(localStorage.getItem('ads')      || '[]');
-    let chats    = JSON.parse(localStorage.getItem('chatData') || '[]');
+    let chats    = JSON.parse(localStorage.getItem('chatData') || '[]'); 
     let showAdsFlag = JSON.parse(localStorage.getItem('showAds') || 'true');
 
-    const capA = Math.floor(Math.random()*10);
-    const capB = Math.floor(Math.random()*10);
+    // تولید اعداد کپچا (دو عدد تصادفی بین 0 تا 9)
+    const capA = Math.floor(Math.random() * 10);
+    const capB = Math.floor(Math.random() * 10);
     document.getElementById('cap-a').innerText = capA;
     document.getElementById('cap-b').innerText = capB;
 
     // تبدیل فایل تصویری به Base64 و برگشت رشتهٔ Base64 در callback
     function fileToBase64(file, callback) {
-      const reader = new FileReader();
+      const reader = new FileReader(); 
       reader.onload = function (e) {
         callback(e.target.result.toString()); // مثل "data:image/png;base64,...."
       };
@@ -444,7 +444,7 @@
         mC.appendChild(div);
       });
 
-      // نمایش تبلیغات (یا مخفی‌سازی اگر تیک نبود)
+      // نمایش تبلیغات (یا مخفی‌سازی اگر تیک نخورده)
       const adsSection = document.getElementById('adsSection');
       if (showAdsFlag) {
         adsSection.style.display = 'block';
@@ -492,7 +492,7 @@
       }
     }
 
-    // به‌روزرسانی لیست خبرها در پنل مدیریت (نمایش وضعیت پر یا خالی بودن)
+    // به‌روزرسانی لیست خبرها در پنل مدیریت (نمایش وضعیت پر یا خالی)
     function refreshContentList() {
       let list = document.getElementById('content-list');
       list.innerHTML = '';
@@ -715,6 +715,21 @@
       document.getElementById('admin-reply').value = '';
       renderChatHistory(selectedUser);
       if (localStorage.getItem('randomUser') === selectedUser) renderUserChat();
+    }
+
+    // نمایش تب‌های مختلف در پنل مدیریت
+    function showTab(tabName) {
+      const tabs = ['content', 'ads', 'messages'];
+      tabs.forEach(name => {
+        const btn = document.getElementById(`tab-${name}-btn`);
+        const pane = document.getElementById(`tab-${name}`);
+        if (btn) btn.classList.remove('active');
+        if (pane) pane.classList.remove('active');
+      });
+      const selectedBtn = document.getElementById(`tab-${tabName}-btn`);
+      const selectedPane = document.getElementById(`tab-${tabName}`);
+      if (selectedBtn) selectedBtn.classList.add('active');
+      if (selectedPane) selectedPane.classList.add('active');
     }
 
     // ورود/خروج مدیر
