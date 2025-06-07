@@ -1,80 +1,199 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="fa">
 <head>
-    <meta charset="UTF-8">
-    <title>خبرزات</title>
-    <style>
-        body {
-            font-family: Tahoma, sans-serif;
-            background-color: #f5f5f5;
-            color: #333;
-            direction: rtl;
-            margin: 0;
-            padding: 0;
-        }
-        header {
-            background-color: #cc0000;
-            color: white;
-            padding: 20px;
-            text-align: center;
-            font-size: 26px;
-        }
-        main {
-            max-width: 800px;
-            margin: 30px auto;
-            padding: 0 20px;
-        }
-        .news-item {
-            background-color: white;
-            border: 1px solid #ddd;
-            border-right: 5px solid #cc0000;
-            margin-bottom: 15px;
-            padding: 15px;
-            transition: background-color 0.3s;
-        }
-        .news-item:hover {
-            background-color: #fff0f0;
-        }
-        .news-item a {
-            text-decoration: none;
-            color: #cc0000;
-            font-size: 18px;
-        }
-        footer {
-            background-color: #eee;
-            text-align: center;
-            padding: 10px;
-            font-size: 14px;
-            margin-top: 50px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>خبرزات | اخبار حرفه‌ای</title>
+  <style>
+    /* Reset */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: Tahoma, sans-serif;
+      direction: rtl;
+      background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet);
+      background-size: 400% 400%;
+      animation: rainbow 20s ease infinite;
+      color: #333;
+      min-height: 100vh;
+    }
+    @keyframes rainbow {
+      0%{background-position:0% 50%;}
+      50%{background-position:100% 50%;}
+      100%{background-position:0% 50%;}
+    }
+    header {
+      padding: 20px;
+      text-align: center;
+      background: rgba(255,255,255,0.2);
+      backdrop-filter: blur(10px);
+    }
+    header h1 {
+      color: white;
+      font-size: 2rem;
+    }
+    nav {
+      display: flex;
+      justify-content: center;
+      margin: 20px 0;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    nav button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 1rem;
+      background: rgba(255,255,255,0.3);
+      color: white;
+      transition: transform 0.2s, background 0.2s;
+    }
+    nav button:hover {
+      transform: scale(1.05);
+      background: rgba(255,255,255,0.5);
+    }
+    .container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+      max-width: 1200px;
+      margin: auto;
+      padding: 20px;
+    }
+    .news-item {
+      background: rgba(255,255,255,0.8);
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      padding: 15px;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s;
+    }
+    .news-item:hover { transform: translateY(-5px); }
+    .news-item h2 {
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+      color: #222;
+    }
+    .news-item p {
+      flex: 1;
+      line-height: 1.5;
+      margin-bottom: 15px;
+    }
+    .news-item a {
+      text-decoration: none;
+      align-self: flex-start;
+      padding: 8px 12px;
+      border-radius: 5px;
+      background: #3c3c3c;
+      color: white;
+      transition: background 0.2s;
+    }
+    .news-item a:hover { background: #555; }
+    /* Responsive */
+    @media (max-width: 600px) {
+      header h1 { font-size: 1.5rem; }
+      nav button { font-size: 0.9rem; padding: 8px 16px; }
+    }
+  </style>
 </head>
 <body>
-    <header>وب‌سایت خبری خبرزات</header>
-    <main>
-        <div class="news-item">
-            <a href="https://www.khabaronline.ir/news/1912345" target="_blank">
-                افزایش نرخ دلار در بازار آزاد تهران
-            </a>
-        </div>
-        <div class="news-item">
-            <a href="https://www.isna.ir/news/1403031007520" target="_blank">
-                وقوع زلزله خفیف در جنوب کشور
-            </a>
-        </div>
-        <div class="news-item">
-            <a href="https://www.tabnak.ir/fa/news/1248583" target="_blank">
-                واکنش وزارت بهداشت به کمبود دارو
-            </a>
-        </div>
-        <div class="news-item">
-            <a href="https://www.irna.ir/news/85328549" target="_blank">
-                آغاز ثبت‌نام کنکور سراسری ۱۴۰۴
-            </a>
-        </div>
-    </main>
-    <footer>
-        تمامی حقوق برای خبرزات محفوظ است © 2025
-    </footer>
+  <header>
+    <h1>خبرزات</h1>
+  </header>
+  <nav>
+    <button onclick="filterNews('iran')">اخبار ایران</button>
+    <button onclick="filterNews('world')">اخبار جهان</button>
+    <button onclick="filterNews('football')">اخبار فوتبال</button>
+  </nav>
+  <div class="container" id="newsContainer">
+    <!-- اخبار ایران -->
+    <div class="news-item" data-category="iran">
+      <h2>تحول در بازار مسکن ایران</h2>
+      <p>افزایش قیمت‌ها در پایتخت و تأثیر آن بر تقاضای اجاره در بخش مسکن.</p>
+      <a href="https://www.irna.ir/news/85000001/مسکن-تهران-و-چالش-قیمت" target="_blank">متن کامل</a>
+    </div>
+    <div class="news-item" data-category="iran">
+      <h2>کاهش نرخ بهره توسط بانک مرکزی</h2>
+      <p>تحلیل پیامدهای اقتصادی کاهش نرخ سود بانکی و پیش‌بینی بازار.</p>
+      <a href="https://www.isna.ir/news/14040310/بانک-مرکزی-نرخ-بهره" target="_blank">متن کامل</a>
+    </div>
+    <div class="news-item" data-category="iran">
+      <h2>راه‌اندازی مترو در شهرهای جدید</h2>
+      <p>برنامه‌های توسعه حمل‌و‌نقل عمومی و چالش‌های پیش‌رو.</p>
+      <a href="https://www.mehrnews.com/news/5800000/مترو-شهرهای-جدید" target="_blank">متن کامل</a>
+    </div>
+    <div class="news-item" data-category="iran">
+      <h2>افتتاح نمایشگاه فناوری تهران</h2>
+      <p>معرفی شرکت‌های استارتاپی و آخرین نوآوری‌ها در حوزه فناوری.</p>
+      <a href="https://www.tabnak.ir/fa/news/123456/نمایشگاه-فناوری-تهران" target="_blank">متن کامل</a>
+    </div>
+    <div class="news-item" data-category="iran">
+      <h2>افزایش تورم در ماه گذشته</h2>
+      <p>بررسی دلایل اصلی جهش نرخ تورم و راهکارهای مقابله با آن.</p>
+      <a href="https://www.yjc.ir/fa/news/850123/نرخ-تورم-ایران" target="_blank">متن کامل</a>
+    </div>
+    <!-- اخبار جهان -->
+    <div class="news-item" data-category="world">
+      <h2>نشست G7 در اروپا</h2>
+      <p>اهداف و بیانیه پایانی رهبران هفت کشور بزرگ اقتصادی.</p>
+      <a href="https://www.bbc.com/persian/world-66000000" target="_blank">متن کامل</a>
+    </div>
+    <div class="news-item" data-category="world">
+      <h2>افزایش دمای کره زمین</h2>
+      <p>گزارش جدید سازمان ملل درباره تغییرات اقلیمی و هشدارها.</p>
+      <a href="https://www.voanews.com/persian/world-5600000" target="_blank">متن کامل</a>
+    </div>
+    <div class="news-item" data-category="world">
+      <h2>انتخابات پارلمانی آلمان</h2>
+      <p>نتایج اولیه و تأثیر آن بر سیاست اتحادیه اروپا.</p>
+      <a href="https://www.dw.com/fa-ir/آلمان-انتخابات-پارلمان/a-65000000" target="_blank">متن کامل</a>
+    </div>
+    <div class="news-item" data-category="world">
+      <h2>پیشرفت در کاوش مریخ</h2>
+      <p>ارسال نمونه‌های سنگ‌شناسی به زمین و برنامه‌های آینده ناسا.</p>
+      <a href="https://www.cnn.com/2025/06/01/world/mars-sample-return/index.html" target="_blank">متن کامل</a>
+    </div>
+    <div class="news-item" data-category="world">
+      <h2>بحران اقتصادی در آمریکای لاتین</h2>
+      <p>تأثیر بدهی‌های سنگین بر ثبات مالی کشورهای منطقه.</p>
+      <a href="https://www.aljazeera.com/news/2025/6/2/latin-america-debt-crisis" target="_blank">متن کامل</a>
+    </div>
+    <!-- اخبار فوتبال -->
+    <div class="news-item" data-category="football">
+      <h2>نتایج هفته سوم لیگ قهرمانان</h2>
+      <p>خلاصه بازی‌ها و برترین گل‌ها.</p>
+      <a href="https://www.varzesh3.com/news/20000001/لیگ-قهرمانان-هفته-سوم" target="_blank">متن کامل</a>
+    </div>
+    <div class="news-item" data-category="football">
+      <h2>آمادگی ایران برای جام جهانی</h2>
+      <p>گزارش تمرینات نهایی و ترکیب احتمالی تیم ملی.</p>
+      <a href="https://www.farsnews.ir/news/140403100001/تمرینات-نهایی-تیم-ملی" target="_blank">متن کامل</a>
+    </div>
+    <div class="news-item" data-category="football">
+      <h2>انتقال ستاره اروپایی به لیگ برتر</h2>
+      <p>جزئیات قرارداد و واکنش هواداران.</p>
+      <a href="https://www.khabaronline.ir/news/1500000/انتقال-ستاره-اروپایی" target="_blank">متن کامل</a>
+    </div>
+    <div class="news-item" data-category="football">
+      <h2>گزارش ویژه: VAR در فوتبال</h2>
+      <p>مزایا و معایب سیستم کمک‌داور ویدئویی.</p>
+      <a href="https://www.isna.ir/news/14040310/VAR-فوتبال" target="_blank">متن کامل</a>
+    </div>
+    <div class="news-item" data-category="football">
+      <h2>برنامه پیش‌رو لیگ برتر ایران</h2>
+      <p>چشم‌انداز فصل جدید و تیم‌های مدعی قهرمانی.</p>
+      <a href="https://www.mashreghnews.ir/news/140403100001/لیگ-برتر-ایران" target="_blank">متن کامل</a>
+    </div>
+  </div>
+  <script>
+    function filterNews(category) {
+      document.querySelectorAll('.news-item').forEach(item => {
+        item.style.display = (item.getAttribute('data-category') === category) ? 'flex' : 'none';
+      });
+    }
+    // نمایش اولیه: اخبار ایران
+    filterNews('iran');
+  </script>
 </body>
 </html>
