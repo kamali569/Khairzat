@@ -1,260 +1,109 @@
-// داده ۳۰ خبر حرفه‌ای سایت خبری
+// تعداد خبر در هر صفحه
+const NEWS_PER_PAGE = 9;
+let currentPage = 1;
+let currentCategory = "all";
 
-const news = [
-  {
-    id: 1,
-    title: "رشد اقتصادی ایران در سال ۱۴۰۴",
-    category: "اقتصاد",
-    excerpt: "بر اساس گزارش‌ها، رشد اقتصادی ایران در سال ۱۴۰۴ افزایش چشمگیری خواهد داشت.",
-    content: "در سال ۱۴۰۴، اقتصاد ایران شاهد رشد مثبت و بهبود شرایط کسب‌وکار خواهد بود. دولت اقدامات مهمی برای حمایت از تولید داخلی و جذب سرمایه‌گذاری انجام داده است..."
-  },
-  {
-    id: 2,
-    title: "تیم ملی فوتبال ایران به جام جهانی صعود کرد",
-    category: "ورزش",
-    excerpt: "تیم ملی فوتبال ایران موفق شد با پیروزی برابر رقیب سرسخت به جام جهانی ۲۰۲۶ صعود کند.",
-    content: "این موفقیت بزرگ باعث خوشحالی میلیون‌ها ایرانی شد و تیم ملی با انگیزه برای رقابت‌های جهانی آماده می‌شود..."
-  },
-  {
-    id: 3,
-    title: "آغاز مذاکرات صلح در خاورمیانه",
-    category: "بین‌الملل",
-    excerpt: "کشورهای منطقه در حال برگزاری مذاکرات مهم برای رسیدن به توافق صلح هستند.",
-    content: "مذاکرات صلح با حضور نمایندگان کشورهای مختلف و حمایت سازمان ملل متحد آغاز شده و امیدها برای ثبات منطقه افزایش یافته است..."
-  },
-  {
-    id: 4,
-    title: "تکنولوژی ۵G در ایران راه‌اندازی شد",
-    category: "فناوری",
-    excerpt: "شبکه ۵G در ایران با سرعت بالا و پوشش گسترده راه‌اندازی شد.",
-    content: "این تکنولوژی جدید تحول بزرگی در ارتباطات و اینترنت همراه ایجاد خواهد کرد و فرصت‌های اقتصادی جدیدی به وجود می‌آورد..."
-  },
-  {
-    id: 5,
-    title: "افزایش تولیدات کشاورزی با روش‌های نوین",
-    category: "اقتصاد",
-    excerpt: "کشاورزان با استفاده از فناوری‌های جدید موفق به افزایش چشمگیر تولیدات خود شدند.",
-    content: "روش‌های نوین کشاورزی مانند کشت هیدروپونیک و هوشمندسازی مزرعه‌ها باعث افزایش بهره‌وری و کاهش مصرف آب شده است..."
-  },
-  {
-    id: 6,
-    title: "افتتاح بزرگ‌ترین نمایشگاه کتاب تهران",
-    category: "فرهنگ",
-    excerpt: "نمایشگاه کتاب تهران با حضور ناشران داخلی و خارجی آغاز به کار کرد.",
-    content: "این نمایشگاه فرصت مناسبی برای علاقه‌مندان به کتاب و فرهنگ است تا با تازه‌های نشر آشنا شوند و در رویدادهای مختلف شرکت کنند..."
-  },
-  {
-    id: 7,
-    title: "پیروزی تیم ملی والیبال ایران در مسابقات قهرمانی آسیا",
-    category: "ورزش",
-    excerpt: "تیم ملی والیبال ایران با عملکردی عالی قهرمان آسیا شد.",
-    content: "بازیکنان ایران با تمرکز و تلاش فراوان در مسابقات قهرمانی آسیا موفق به کسب مدال طلا شدند و افتخار بزرگی آفریدند..."
-  },
-  {
-    id: 8,
-    title: "پیشرفت‌های فناوری نانو در ایران",
-    category: "فناوری",
-    excerpt: "محققان ایرانی دستاوردهای مهمی در زمینه فناوری نانو ارائه دادند.",
-    content: "تحقیقات در حوزه نانو مواد و نانو داروها به توسعه صنایع پیشرفته و بهبود کیفیت محصولات پزشکی کمک شایانی کرده است..."
-  },
-  {
-    id: 9,
-    title: "تصویب قانون حمایت از محیط زیست",
-    category: "اجتماعی",
-    excerpt: "قانون جدید حمایت از محیط زیست توسط مجلس تصویب شد.",
-    content: "این قانون با هدف کاهش آلودگی‌ها و حفظ منابع طبیعی کشور طراحی شده و شامل مقررات سختگیرانه‌ای برای صنایع آلاینده است..."
-  },
-  {
-    id: 10,
-    title: "سینمای ایران در جشنواره جهانی فیلم",
-    category: "فرهنگ",
-    excerpt: "فیلم‌های ایرانی در جشنواره جهانی فیلم مورد تحسین قرار گرفتند.",
-    content: "کارگردانان و بازیگران ایرانی با آثار شاخص خود توانستند جوایز مهمی را کسب کنند و نام ایران را در سطح بین‌المللی مطرح کنند..."
-  },
-  {
-    id: 11,
-    title: "افتتاح مسیر ریلی جدید در شمال کشور",
-    category: "اقتصاد",
-    excerpt: "مسیر ریلی جدید با هدف تسهیل حمل و نقل کالا و مسافر افتتاح شد.",
-    content: "این پروژه بزرگ زیرساخت‌های حمل و نقل را تقویت کرده و به توسعه اقتصادی مناطق شمالی کمک خواهد کرد..."
-  },
-  {
-    id: 12,
-    title: "برگزاری مسابقات ورزش‌های الکترونیکی در تهران",
-    category: "ورزش",
-    excerpt: "مسابقات جذاب ورزش‌های الکترونیکی با استقبال گسترده برگزار شد.",
-    content: "بازیکنان حرفه‌ای و علاقه‌مندان به بازی‌های ویدیویی در این رویداد شرکت کردند و جوایز ارزشمندی دریافت نمودند..."
-  },
-  {
-    id: 13,
-    title: "پروژه‌های جدید شهری در تهران",
-    category: "اجتماعی",
-    excerpt: "طرح‌های توسعه شهری و بهبود زیرساخت‌ها در تهران در حال اجرا است.",
-    content: "هدف از این پروژه‌ها افزایش کیفیت زندگی شهروندان و بهبود فضای شهری می‌باشد..."
-  },
-  {
-    id: 14,
-    title: "کاهش نرخ بیکاری در سال جاری",
-    category: "اقتصاد",
-    excerpt: "نرخ بیکاری با اجرای برنامه‌های اشتغال‌زایی کاهش یافته است.",
-    content: "دولت با همکاری بخش خصوصی توانسته فرصت‌های شغلی جدید ایجاد کند و وضعیت بازار کار را بهبود بخشد..."
-  },
-  {
-    id: 15,
-    title: "برگزاری کنفرانس فناوری اطلاعات",
-    category: "فناوری",
-    excerpt: "کنفرانس سالانه فناوری اطلاعات با حضور متخصصان داخلی و خارجی برگزار شد.",
-    content: "موضوعات مهمی همچون امنیت سایبری، اینترنت اشیا و هوش مصنوعی در این کنفرانس مطرح شدند..."
-  },
-  {
-    id: 16,
-    title: "گسترش آموزش آنلاین در ایران",
-    category: "اجتماعی",
-    excerpt: "آموزش آنلاین در سطح کشور رشد قابل توجهی داشته است.",
-    content: "موسسات آموزشی با ارائه دوره‌های مجازی، دسترسی به آموزش را برای همه آسان‌تر کرده‌اند..."
-  },
-  {
-    id: 17,
-    title: "افتتاح پارک ملی جدید در غرب کشور",
-    category: "فرهنگ",
-    excerpt: "پارک ملی جدید به منظور حفاظت از گونه‌های نادر طبیعی افتتاح شد.",
-    content: "این پارک فرصتی برای حفظ تنوع زیستی و جذب گردشگران علاقه‌مند به طبیعت فراهم می‌کند..."
-  },
-  {
-    id: 18,
-    title: "تحقیقات جدید درباره انرژی‌های تجدیدپذیر",
-    category: "فناوری",
-    excerpt: "پژوهش‌های جدیدی در زمینه انرژی‌های پاک و تجدیدپذیر انجام شده است.",
-    content: "این تحقیقات به توسعه منابع انرژی پایدار و کاهش وابستگی به سوخت‌های فسیلی کمک می‌کند..."
-  },
-  {
-    id: 19,
-    title: "پیشرفت پروژه‌های حمل و نقل شهری",
-    category: "اجتماعی",
-    excerpt: "پروژه‌های مترو و اتوبوس‌رانی در شهرهای بزرگ پیشرفت خوبی داشته‌اند.",
-    content: "این پروژه‌ها به کاهش ترافیک و بهبود کیفیت هوا کمک می‌کنند..."
-  },
-  {
-    id: 20,
-    title: "افزایش صادرات محصولات کشاورزی",
-    category: "اقتصاد",
-    excerpt: "صادرات محصولات کشاورزی به بازارهای بین‌المللی افزایش یافته است.",
-    content: "تلاش‌های دولت برای ارتقاء کیفیت و استانداردهای تولید باعث رشد صادرات شده است..."
-  },
-  {
-    id: 21,
-    title: "برگزاری جشنواره موسیقی سنتی ایرانی",
-    category: "فرهنگ",
-    excerpt: "جشنواره‌ای بزرگ برای معرفی موسیقی سنتی و هنرمندان ایرانی برگزار شد.",
-    content: "این رویداد فرهنگی فرصتی برای حفظ و ترویج موسیقی اصیل ایرانی است..."
-  },
-  {
-    id: 22,
-    title: "نقش هوش مصنوعی در توسعه صنایع کشور",
-    category: "فناوری",
-    excerpt: "هوش مصنوعی در بهبود فرآیندهای صنعتی و افزایش بهره‌وری نقش مهمی دارد.",
-    content: "استفاده از فناوری‌های نوین هوش مصنوعی باعث افزایش کیفیت تولید و کاهش هزینه‌ها شده است..."
-  },
-  {
-    id: 23,
-    title: "افزایش علاقه‌مندی جوانان به کارآفرینی",
-    category: "اقتصاد",
-    excerpt: "تعداد جوانان فعال در حوزه کارآفرینی روز به روز در حال افزایش است.",
-    content: "برنامه‌های حمایتی و آموزش‌های تخصصی باعث رشد این حوزه و ایجاد فرصت‌های شغلی جدید شده‌اند..."
-  },
-  {
-    id: 24,
-    title: "حفظ سلامت روان در دوران پساکرونا",
-    category: "اجتماعی",
-    excerpt: "مقابله با مشکلات روانی ناشی از همه‌گیری کرونا در اولویت قرار گرفت.",
-    content: "برنامه‌های مشاوره و حمایت‌های روانشناختی برای افراد مختلف جامعه اجرا می‌شود..."
-  },
-  {
-    id: 25,
-    title: "پیشرفت‌های چشمگیر در حوزه هوافضا",
-    category: "فناوری",
-    excerpt: "ایران در زمینه فناوری‌های هوافضایی دستاوردهای مهمی کسب کرده است.",
-    content: "پژوهش‌ها و پروژه‌های جدید باعث افزایش توانمندی‌های کشور در این حوزه شده‌اند..."
-  },
-  {
-    id: 26,
-    title: "توسعه گردشگری داخلی با معرفی جاذبه‌های طبیعی",
-    category: "فرهنگ",
-    excerpt: "طرح‌هایی برای جذب گردشگران داخلی و معرفی مناطق بکر طبیعی اجرا می‌شود.",
-    content: "این برنامه‌ها به افزایش درآمدهای محلی و اشتغال‌زایی در مناطق مختلف کمک می‌کنند..."
-  },
-  {
-    id: 27,
-    title: "افتتاح مراکز آموزش فنی‌وحرفه‌ای در شهرهای کوچک",
-    category: "اجتماعی",
-    excerpt: "ایجاد مراکز آموزش فنی‌وحرفه‌ای در مناطق محروم آغاز شده است.",
-    content: "این مراکز فرصت‌های شغلی بیشتری برای جوانان فراهم می‌کنند و به رشد اقتصادی منطقه کمک می‌کنند..."
-  },
-  {
-    id: 28,
-    title: "کاهش آلودگی هوا با استفاده از خودروهای برقی",
-    category: "فناوری",
-    excerpt: "استفاده از خودروهای برقی به کاهش آلودگی هوای شهرها کمک کرده است.",
-    content: "این تکنولوژی نوین به حفظ سلامت شهروندان و محیط زیست کمک می‌کند..."
-  },
-  {
-    id: 29,
-    title: "برگزاری نمایشگاه فناوری‌های نوین در مشهد",
-    category: "فناوری",
-    excerpt: "نمایشگاهی برای معرفی فناوری‌های نوین با حضور شرکت‌های برتر برگزار شد.",
-    content: "این نمایشگاه فرصتی برای شبکه‌سازی و معرفی دستاوردهای فناورانه به فعالان حوزه فناوری است..."
-  },
-  {
-    id: 30,
-    title: "توسعه ورزش همگانی در سراسر کشور",
-    category: "ورزش",
-    excerpt: "برنامه‌های متنوعی برای تشویق مردم به ورزش همگانی در حال اجرا است.",
-    content: "این برنامه‌ها با هدف ارتقاء سلامت عمومی و ایجاد نشاط اجتماعی برگزار می‌شوند..."
-  }
+// داده ۴۰ خبر نمونه
+const newsData = [
+  // ترتیب: جهان، فوتبال، ایران، فناوری، لپ‌تاپ، موبایل، حوادث، پیش‌بینی آینده
+  { title: "تعمیق بحران انرژی در اروپا", summary: "بحران گاز طبیعی تشدید شده و قیمت‌ها رکورد می‌زنند.", content: "با افزایش تنش‌های سیاسی، تامین گاز از روسیه کاهش یافته و کشورهای اروپایی به دنبال منابع جایگزین هستند...", category: "جهان", date: "2025-06-08", probability: 85 },
+  { title: "قهرمانی آرژانتین در جام جهانی فوتبال", summary: "آرژانتین بار دیگر فاتح جام جهانی شد.", content: "با درخشش مسی و نمایش قدرتمند دفاعی، آرژانتین در فینال یکی از به‌یادماندنی‌ترین بازی‌ها را به نام خود ثبت کرد...", category: "فوتبال", date: "2025-06-05", probability: 95 },
+  { title: "انتخابات ریاست‌جمهوری ایران ۱۴۰۴", summary: "نامزدها رقابتی نزدیک داشتند.", content: "در نهایت، کاندیدای اصولگرا با اختلاف کم پیروز شد و وعده‌های اقتصادی متعددی مطرح کرد...", category: "ایران", date: "2025-06-02", probability: 75 },
+  { title: "معرفی پردازنده جدید اینتل Core Ultra", summary: "معماری جدید با مصرف انرژی کم.", content: "این تراشه با لیتوگرافی ۵ نانومتر عملکرد تک‌هسته‌ای و چند‌هسته‌ای را بهبود داده است...", category: "فناوری", date: "2025-06-07", probability: 90 },
+  { title: "لپ‌تاپ‌های گیمینگ ۲۰۲۵: افزایش قدرت و خنک‌سازی", summary: "جدیدترین مدل‌ها با نورپردازی RGB.", content: "سری جدید لپ‌تاپ‌های MSI و Asus با خنک‌کننده مبتنی بر مایع و کارت گرافیک RTX 50 معرفی شدند...", category: "لپ‌تاپ", date: "2025-06-01", probability: 80 },
+  { title: "آنر Magic V2 با دوربین ۲۰۰ مگاپیکسلی", summary: "پرچمدار جدید با صفحه تاشو.", content: "این موبایل با نمایشگر LTPO 120 هرتز و شارژ سریع ۸۰ واتی معرفی شد...", category: "موبایل", date: "2025-06-04", probability: 88 },
+  { title: "زلزله ۶.۲ ریشتری در استان کرمانشاه", summary: "خسارات جانی و مالی سنگین گزارش شد.", content: "این زلزله در عمق ۱۰ کیلومتری رخ داد و بیش از ۳۰ نفر کشته و صدها مصدوم برجای گذاشت...", category: "حوادث", date: "2025-06-03", probability: 60 },
+  { title: "پیش‌بینی هوش مصنوعی درباره جنگ‌های آینده", summary: "استفاده از ربات‌ها و پهپادهای جنگی.", content: "طبق گزارش مؤسسه RAND، تا سال ۲۰۳۰ نقش هوش مصنوعی در تصمیم‌گیری‌های نظامی بسیار پررنگ خواهد شد...", category: "پیش‌بینی آینده", date: "2025-06-06", probability: 70 },
+
+  // … اینجا ۳۲ خبر دیگر با همین فرمت اضافه کنید …
+  
+  // نمونه ایجاد مابقی با کد
+  ...Array.from({ length: 32 }, (_, i) => {
+    const cats = ["جهان","فوتبال","ایران","فناوری","لپ‌تاپ","موبایل","حوادث","پیش‌بینی آینده"];
+    return {
+      title: `خبر شماره ${i+9} (${cats[i%cats.length]})`,
+      summary: `خلاصه خبر شماره ${i+9} در دسته ${cats[i%cats.length]}.`,
+      content: `این متن کامل خبر شماره ${i+9} است. جزئیات بیشتر در این قسمت آورده می‌شود...`,
+      category: cats[i%cats.length],
+      date: `2025-06-${String((i%28)+1).padStart(2,"0")}`,
+      probability: Math.floor(Math.random()*51)+50  // احتمال ۵۰–۱۰۰٪
+    };
+  })
 ];
 
-// نمایش اخبار روی صفحه
-const newsList = document.getElementById('news-list');
-const categoryButtons = document.querySelectorAll('.category-btn');
+// ارجاع به المان‌ها
+const listEl = document.getElementById("news-list");
+const catFilterEl = document.querySelector(".category-filter");
+const prevBtn = document.getElementById("prevBtn");
+const nextBtn = document.getElementById("nextBtn");
+const pageInfo = document.getElementById("pageInfo");
 
-function displayNews(filteredNews) {
-  newsList.innerHTML = '';
-  if (filteredNews.length === 0) {
-    newsList.innerHTML = '<p>هیچ خبری برای نمایش وجود ندارد.</p>';
-    return;
-  }
-  filteredNews.forEach(item => {
-    const newsCard = document.createElement('article');
-    newsCard.classList.add('news-card');
+// ساخت دکمه‌های دسته
+function buildCategories() {
+  const counts = { all: newsData.length };
+  newsData.forEach(n => counts[n.category] = (counts[n.category]||0)+1);
 
-    newsCard.innerHTML = `
-      <h2 class="news-title">${item.title}</h2>
-      <div class="news-category">${item.category}</div>
-      <p class="news-excerpt">${item.excerpt}</p>
-    `;
-
-    newsCard.addEventListener('click', () => {
-      alert(`${item.title}\n\n${item.content}`);
-    });
-
-    newsList.appendChild(newsCard);
+  Object.keys(counts).forEach(cat => {
+    if (cat === "all") return;
+    const btn = document.createElement("button");
+    btn.setAttribute("data-category", cat);
+    btn.innerHTML = `${cat} <span class="count">${counts[cat]}</span>`;
+    catFilterEl.appendChild(btn);
   });
+  catFilterEl.querySelector("[data-category='all'] .count").textContent = counts.all;
 }
 
-// دسته‌بندی اخبار
-categoryButtons.forEach(btn => {
-  btn.addEventListener('click', () => {
-    categoryButtons.forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    const category = btn.getAttribute('data-category');
-    if (category === 'all') {
-      displayNews(news);
-    } else {
-      const filtered = news.filter(n => n.category === category);
-      displayNews(filtered);
-    }
-  });
-});
+// دریافت آرایه فیلترشده و مرتب‌شده
+function getFiltered() {
+  let arr = currentCategory==="all" ? newsData : newsData.filter(n=>n.category===currentCategory);
+  return arr.sort((a,b)=> new Date(b.date) - new Date(a.date));
+}
 
-// بارگذاری اولیه همه اخبار
-displayNews(news);
+// رندر صفحه
+function render() {
+  const all = getFiltered();
+  const totalPages = Math.ceil(all.length/NEWS_PER_PAGE);
+  if(currentPage>totalPages) currentPage=totalPages||1;
+
+  const start=(currentPage-1)*NEWS_PER_PAGE, pageNews=all.slice(start,start+NEWS_PER_PAGE);
+
+  listEl.innerHTML = "";
+  pageNews.forEach(n => {
+    const card = document.createElement("div");
+    card.className = "news-card";
+    card.innerHTML = `
+      <div class="news-header">
+        <div class="news-title">${n.title}</div>
+        <div class="news-prob">${n.probability}%</div>
+      </div>
+      <div class="news-meta">${new Date(n.date).toLocaleDateString('fa-IR')} | ${n.category}</div>
+      <div class="news-summary">${n.summary}</div>
+      <div class="news-content">${n.content}</div>
+    `;
+    card.addEventListener("click", ()=> {
+      const c = card.querySelector(".news-content");
+      c.style.display = c.style.display==="block" ? "none" : "block";
+    });
+    listEl.appendChild(card);
+  });
+
+  pageInfo.textContent = `${currentPage} / ${totalPages||1}`;
+  prevBtn.disabled = currentPage===1;
+  nextBtn.disabled = currentPage===totalPages;
+}
+
+// رویدادها
+catFilterEl.addEventListener("click", e=>{
+  if(e.target.tagName!=="BUTTON") return;
+  catFilterEl.querySelectorAll("button").forEach(b=>b.classList.remove("active"));
+  e.target.classList.add("active");
+  currentCategory = e.target.getAttribute("data-category");
+  currentPage = 1;
+  render();
+});
+prevBtn.addEventListener("click", ()=>{ currentPage>1 && currentPage--; render(); });
+nextBtn.addEventListener("click", ()=>{ currentPage++; render(); });
+
+// اجرا
+buildCategories();
+render();

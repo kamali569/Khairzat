@@ -1,126 +1,167 @@
-/* Reset و تنظیمات پایه */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Tahoma', sans-serif;
-  direction: rtl;
-}
+/* Reset پایه */
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-  background: #f5f5f5;
-  color: #222;
+  font-family: "Vazir", Tahoma, sans-serif;
+  direction: rtl;
+  background: #f5f7f8;
+  color: #333;
   line-height: 1.6;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
 }
 
 header {
-  background: #d32f2f;
-  color: white;
-  padding: 1rem 2rem;
+  background: #0066cc;
+  color: #fff;
   text-align: center;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+  padding: 20px;
+  font-size: 2rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
 }
 
-header h1 {
-  font-size: 2.8rem;
-  letter-spacing: 3px;
-  margin-bottom: 0.5rem;
+.category-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  padding: 15px;
+  background: #fff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-nav {
-  margin-top: 0.5rem;
-}
-
-.category-btn {
-  background: transparent;
-  border: 2px solid white;
-  color: white;
-  padding: 0.5rem 1rem;
-  margin: 0 0.3rem 0.5rem 0.3rem;
+.category-filter button {
+  background: #e0e7ef;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 20px;
   cursor: pointer;
-  border-radius: 25px;
-  transition: all 0.3s ease;
-  font-weight: bold;
-  font-size: 1rem;
+  font-weight: 600;
+  position: relative;
+  transition: background 0.3s;
 }
 
-.category-btn:hover,
-.category-btn.active {
-  background: white;
-  color: #d32f2f;
-  border-color: #d32f2f;
+.category-filter button.active,
+.category-filter button:hover {
+  background: #0066cc;
+  color: #fff;
 }
 
-main {
-  flex: 1;
-  max-width: 900px;
-  margin: 2rem auto;
-  padding: 0 1rem;
+.category-filter .count {
+  background: #ff5a5f;
+  color: #fff;
+  border-radius: 10px;
+  padding: 2px 6px;
+  font-size: 0.8rem;
+  margin-left: 6px;
 }
 
 #news-list {
+  max-width: 960px;
+  margin: 20px auto;
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 1.5rem;
+  gap: 20px;
+  padding: 0 10px;
 }
 
-/* کارت خبر */
 .news-card {
-  background: white;
-  padding: 1.5rem;
+  background: #fff;
   border-radius: 10px;
-  box-shadow: 0 6px 10px rgba(0,0,0,0.1);
-  transition: box-shadow 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  padding: 20px;
+  transition: transform 0.2s, box-shadow 0.2s;
   cursor: pointer;
 }
 
 .news-card:hover {
-  box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+  transform: translateY(-4px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+}
+
+.news-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 10px;
 }
 
 .news-title {
-  font-size: 1.6rem;
-  color: #d32f2f;
-  margin-bottom: 0.5rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #0066cc;
 }
 
-.news-category {
-  font-size: 0.9rem;
-  font-weight: bold;
-  color: #666;
-  margin-bottom: 1rem;
-  text-align: left;
-  direction: ltr;
-}
-
-.news-excerpt {
-  font-size: 1.1rem;
+.news-prob {
+  background: #ffcc00;
   color: #333;
+  padding: 2px 6px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
 }
 
-/* صفحه‌بندی */
+.news-summary {
+  font-size: 1rem;
+  color: #444;
+  margin-bottom: 12px;
+}
+
+.news-content {
+  display: none;
+  font-size: 0.95rem;
+  color: #555;
+  border-top: 1px solid #eee;
+  padding-top: 12px;
+  margin-top: 12px;
+}
+
+.news-meta {
+  font-size: 0.85rem;
+  color: #777;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin: 20px 0;
+}
+
+.pagination button {
+  background: #0066cc;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.pagination button:disabled {
+  background: #aac8ea;
+  cursor: default;
+}
+
+.pagination span {
+  font-size: 1rem;
+  color: #555;
+}
+
 footer {
   text-align: center;
-  padding: 1rem;
-  background: #d32f2f;
-  color: white;
-  margin-top: auto;
+  padding: 15px;
+  background: #f0f0f0;
+  color: #555;
   font-size: 0.9rem;
-  letter-spacing: 1.5px;
 }
 
-/* ریسپانسیو */
-@media (min-width: 600px) {
+/* واکنش‌گرایی */
+@media (min-width: 768px) {
   #news-list {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, 1fr);
   }
 }
-
-@media (min-width: 900px) {
+@media (min-width: 1024px) {
   #news-list {
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: repeat(3, 1fr);
   }
 }

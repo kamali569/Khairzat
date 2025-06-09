@@ -1,33 +1,42 @@
 <!DOCTYPE html>
-<html lang="fa">
+<html lang="fa" dir="rtl">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>خبرزات - سایت خبری حرفه‌ای</title>
+  <title>خبرزات – اخبار روز دنیا</title>
   <link rel="stylesheet" href="style.css" />
+  
+  <!-- Google Analytics GA4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q35DXR7J63"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-Q35DXR7J63');
+  </script>
+  
 </head>
 <body>
+
   <header>
     <h1>خبرزات</h1>
-    <nav id="category-nav">
-      <button class="category-btn active" data-category="all">همه</button>
-      <button class="category-btn" data-category="اقتصاد">اقتصاد</button>
-      <button class="category-btn" data-category="ورزش">ورزش</button>
-      <button class="category-btn" data-category="بین‌الملل">بین‌الملل</button>
-      <button class="category-btn" data-category="فناوری">فناوری</button>
-      <button class="category-btn" data-category="فرهنگ">فرهنگ</button>
-      <button class="category-btn" data-category="اجتماعی">اجتماعی</button>
-    </nav>
   </header>
 
-  <main>
-    <section id="news-list">
-      <!-- اخبار اینجا بارگذاری می‌شوند -->
-    </section>
-  </main>
+  <nav class="category-filter" aria-label="دسته‌بندی اخبار">
+    <button class="active" data-category="all">همه دسته‌ها <span class="count">0</span></button>
+    <!-- دکمه‌های دیگر توسط JS اضافه می‌شوند -->
+  </nav>
+
+  <main id="news-list" aria-live="polite"></main>
+
+  <div class="pagination" aria-label="صفحه‌بندی">
+    <button id="prevBtn" disabled>قبلی</button>
+    <span id="pageInfo">1 / 1</span>
+    <button id="nextBtn" disabled>بعدی</button>
+  </div>
 
   <footer>
-    <p>© ۲۰۲۵ خبرزات | همه حقوق محفوظ است</p>
+    <p>© 2025 خبرزات | تمامی حقوق محفوظ است</p>
   </footer>
 
   <script src="app.js"></script>
