@@ -1,49 +1,76 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fa" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>خبرزات – اخبار روز دنیا</title>
-  <link rel="stylesheet" href="style.css" />
-  
-  <!-- Google Analytics GA4 -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q35DXR7J63"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){ dataLayer.push(arguments); }
-    gtag('js', new Date());
-    gtag('config', 'G-Q35DXR7J63');
-  </script>
-  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>خبرزات — تازه‌ترین اخبار ایران و جهان</title>
+  <meta name="description" content="خبرزات: وب‌سایت خبری مستقل با پوشش سیاست، اقتصاد، جهان، فرهنگ، ورزش، فناوری، سلامت و محیط‌زیست.">
+  <meta name="keywords" content="خبر, خبرگزاری, سیاست, اقتصاد, جهان, فرهنگ, ورزش, فناوری, سلامت, محیط زیست, تحلیل">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="/">
+  <meta property="og:site_name" content="خبرزات">
+  <meta property="og:title" content="خبرزات — تازه‌ترین اخبار ایران و جهان">
+  <meta property="og:description" content="گزارش‌ها، تحلیل‌ها و پرونده‌های خبری روز به زبان فارسی.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="/">
+  <meta property="og:image" content="/images/ii.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="/images/ii.png">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-
-  <header>
-    <h1>خبرزات</h1>
+  <header class="site-header">
+    <div class="topbar">
+      <div class="brand">
+        <img src="/images/ii.png" alt="خبرزات" class="logo">
+        <div>
+          <h1>خبرزات</h1>
+          <p class="tagline">روایتِ دقیقِ خبر — بررسیِ ابعاد و بازتاب‌ها</p>
+        </div>
+      </div>
+      <nav class="main-nav" aria-label="منو اصلی">
+        <a href="#سیاست">سیاست</a><a href="#اقتصاد">اقتصاد</a><a href="#جهان">جهان</a>
+        <a href="#فرهنگ">فرهنگ</a><a href="#ورزش">ورزش</a><a href="#فناوری">فناوری</a>
+        <a href="#سلامت">سلامت</a><a href="#علم">علم</a><a href="#محیط زیست">محیط زیست</a>
+      </nav>
+    </div>
+    <div class="searchbar">
+      <input id="q" placeholder="جستجو در خبرزات…" aria-label="جستجو">
+      <button onclick="doSearch()">جستجو</button>
+    </div>
   </header>
 
-  <nav class="category-filter" aria-label="دسته‌بندی اخبار">
-    <button class="active" data-category="all">همه دسته‌ها <span class="count">0</span></button>
-    <!-- دکمه‌های دیگر توسط JS اضافه می‌شوند -->
-  </nav>
+  <main class="container">
+    <section class="hero" id="hero">
+      <div class="hero-left">
+        <article id="lead-article" class="lead"></article>
+        <div id="lead-list" class="lead-list"></div>
+      </div>
+      <aside class="sidebar">
+        <div class="card" id="trending">
+          <h3>پربازدیدها</h3>
+          <ul id="trending-list"></ul>
+        </div>
+        <div class="card" id="about">
+          <h3>دربارهٔ ما</h3>
+          <p>خبرزات وب‌سایتی مستقل خبری است که گزارش‌های دقیق و تحلیل‌های مبتنی بر شواهد را منتشر می‌کند.</p>
+        </div>
+      </aside>
+    </section>
 
-  <main id="news-list" aria-live="polite"></main>
+    <section class="news-grid" id="news-grid" aria-live="polite"></section>
 
-  <div class="pagination" aria-label="صفحه‌بندی">
-    <button id="prevBtn" disabled>قبلی</button>
-    <span id="pageInfo">1 / 1</span>
-    <button id="nextBtn" disabled>بعدی</button>
-  </div>
+    <nav id="pagination" class="pagination" aria-label="ناوبری صفحات"></nav>
+  </main>
 
-  <footer>
-    <p>© 2025 خبرزات | تمامی حقوق محفوظ است</p>
+  <footer class="site-footer">
+    <div class="container">
+      <p>© 2025 خبرزات — همهٔ حقوق برای خبرزات محفوظ است.</p>
+      <p><a href="/sitemap.xml">نقشه سایت</a> — <a href="/robots.txt">robots.txt</a></p>
+    </div>
   </footer>
 
-  <script src="app.js"></script>
+  <script src="/script.js"></script>
 </body>
-برای داشتن تبلیغات به ایمیل من پیام دهید تعداد روز و نوع را بگین (kamaliiikamaliii270@gmail.com)
-نسخه طلایی 30 هزار تومان در روز (دارای وب سایت خصوصی خوب)
-نسخه نقره ای 20 هزار تومان دارای (وب سایت معمولی خصوصی)
-نسخه برنزی (بدون وب سایت)
-2 نفر اول را 4 روز رایگان است!
 </html>
