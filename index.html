@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang='fa' dir='rtl'>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="راهنمای خرید قطعات کامپیوتر و لپ‌تاپ | بررسی و معرفی بهترین سیستم‌های گیمینگ و رندرینگ">
+    <title>راهنمای خرید قطعات کامپیوتر و لپ‌تاپ | سیستم‌های گیمینگ</title>
+    
+    <link rel="icon" href="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text y=%22.9em%22 font-size=%2290%22&gt;💻&lt;/text&gt;&lt;/svg&gt;">
+    
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --glass-bg: rgba(30, 41, 59, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --primary: #3b82f6;
+            --primary-hover: #2563eb;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Tahoma, 'Segoe UI', system-ui, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image: radial-gradient(circle at 50% 0%, #1e293b 0%, #0f172a 100%);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+        }
+
+        h1 { margin-bottom: 15px; font-size: 28px; }
+        
+        .search-box {
+            width: 100%;
+            max-width: 500px;
+            padding: 12px 20px;
+            border-radius: 8px;
+            border: 1px solid var(--glass-border);
+            background: rgba(15, 23, 42, 0.6);
+            color: white;
+            font-size: 16px;
+            outline: none;
+            transition: 0.3s;
+        }
+        .search-box:focus { border-color: var(--primary); }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .product-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            border-color: rgba(255,255,255,0.2);
+        }
+
+        .delete-btn {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: #ef4444;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 12px;
+            display: none;
+            z-index: 10;
+            transition: 0.3s;
+        }
+        .delete-btn:hover { background: #dc2626; }
+
+        body.admin-mode .delete-btn {
+            display: block;
+        }
+
+        .product-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            background: #1e293b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        .product-title { font-size: 18px; margin-bottom: 10px; line-height: 1.4; }
+        .product-desc { color: var(--text-muted); font-size: 14px; line-height: 1.6; margin-bottom: 15px; flex-grow: 1; }
+        .product-price { font-weight: bold; color: #10b981; font-size: 18px; margin-bottom: 15px; }
+        
+        .buy-btn {
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            text-align: center;
+            padding: 10px;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .buy-btn:hover { background: var(--primary-hover); }
+
+        #adminPanel {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--primary);
+            padding: 30px;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 500px;
+            z-index: 1000;
+            box-shadow: 0 0 30px rgba(0,0,0,0.7);
+        }
+
+        .admin-title { font-size: 20px; margin-bottom: 20px; color: var(--primary); text-align: center; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 5px; font-size: 14px; }
+        .form-group input, .form-group textarea {
+            width: 100%; padding: 10px; border-radius: 8px; border: 1px solid var(--glass-border);
+            background: rgba(0,0,0,0.3); color: white;
+        }
+        .admin-btns { display: flex; gap: 10px; margin-top: 20px; }
+        .btn {
+            flex: 1; padding: 10px; border: none; border-radius: 8px; cursor: pointer;
+            font-weight: bold; color: white; transition: 0.3s;
+        }
+        .btn-save { background: #10b981; }
+        .btn-save:hover { background: #059669; }
+        .btn-download { background: var(--primary); }
+        .btn-download:hover { background: var(--primary-hover); }
+        .btn-close { background: #ef4444; }
+        .btn-close:hover { background: #dc2626; }
+
+        #toast {
+            position: fixed; bottom: 20px; right: 20px; background: #10b981; color: white;
+            padding: 15px 25px; border-radius: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            opacity: 0; transform: translateY(20px); transition: 0.3s; z-index: 9999; pointer-events: none;
+        }
+        #toast.show { opacity: 1; transform: translateY(0); }
+
+        .secret-input {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            background: transparent;
+            border: none;
+            color: rgba(255, 255, 255, 0.2);
+            outline: none;
+            width: 40px;
+            font-size: 12px;
+            opacity: 0.1;
+            transition: 0.3s;
+            z-index: 100;
+        }
+        .secret-input:focus {
+            opacity: 0.5;
+            width: 150px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        }
+    </style>
+</head>
+<body class="">
+
+    <header>
+        <h1>راهنمای خرید قطعات و سیستم‌های گیمینگ</h1>
+        <p style="color: var(--text-muted); margin-bottom: 20px;">بهترین سیستم‌ها برای بازی، رندرینگ و هوش مصنوعی</p>
+        <input type="text" id="searchInput" class="search-box" placeholder="جستجوی محصول (مثلا: RTX 5090 یا 14900K)..." onkeyup="searchProducts()">
+    </header>
+
+    <div class="products-grid" id="productGrid">
+                    <div class="product-card">
+                        <button class="delete-btn" onclick="deleteProduct(0)">حذف ❌</button>
+                        <img src="Shot 0002.png" alt="پلی استیشن 5 پرو" class="product-img" onerror="this.outerHTML='&lt;div class=\'product-img\'&gt;عکس: Shot 0002.png پیدا نشد&lt;/div&gt;'">
+                        <h2 class="product-title">پلی استیشن 5 پرو</h2>
+                        <p class="product-desc">قدرت پردازشی و گرافیک خیره‌کننده (GPU ارتقا یافته)
+مهم‌ترین تفاوت نسخه Pro با PS5 معمولی، گرافیک بسیار قوی‌تر آن است. سونی در این کنسول از سه تکنولوژی کلیدی استفاده کرده است:
+
+PSSR (ارتقای تصویر با هوش مصنوعی): این قابلیت با استفاده از هوش مصنوعی، رزولوشن بازی‌ها را بالا می‌برد. نتیجه این است که می‌توانید بازی‌ها را با گرافیک 4K و فریم‌ریت بالا (مثلا ۶۰ یا ۱۲۰ فریم در ثانیه) بدون افت کیفیت تجربه کنید.
+Ray Tracing (رهگیری پرتو) پیشرفته: بازتاب نور، سایه‌ها و انعکاس در آب یا شیشه در نسخه پرو تا ۲ الی ۳ برابر سریع‌تر و واقع‌گرایانه‌تر پردازش می‌شود.
+شما دیگر مجبور نیستید بین حالت «کیفیت گرافیک» (Fidelity) و «عملکرد روان» (Performance) یکی را انتخاب کنید؛ PS5 Pro ترکیبی از هر دو را ارائه می‌دهد.
+۲. حافظه داخلی ۲ ترابایتی (2TB SSD)
+یکی از بزرگترین مشکلات کنسول‌های قبلی، کمبود فضا بود. سونی در PS5 Pro یک حافظه بسیار سریع ۲ ترابایتی قرار داده است. با توجه به حجم بالای بازی‌های امروزی (که گاهی بالای ۱۰۰ گیگابایت هستند)، با این حجم از حافظه خیالتان برای نصب تعداد زیادی بازی به صورت هم‌زمان راحت خواهد بود و نیازی به خرید سریع هارد اکسترنال ندارید.
+
+۳. ریجن اروپا (Region 2) چه معنایی دارد؟
+کنسول‌های پلی‌استیشن کلا «ریجن‌فری» (Region-Free) هستند؛ یعنی دیسک یا بازی دیجیتالیِ هر نقطه‌ای از جهان روی این کنسول اجرا می‌شود. اما ریجن اروپا (یا همان ریجن ۲) دو نکته دارد:
+
+کابل برق: کابل برق داخل جعبه معمولاً دو‌شاخه‌ی استاندارد اروپایی است که در ایران بدون نیاز به تبدیل‌های عجیب و غریب (برخلاف ریجن بریتانیا یا آسیا) به راحتی به پریز می‌خورد.
+حساب کاربری (PSN): برای خرید بازی‌های دیجیتالی و به‌ویژه افزونه‌ها (DLC)، بهتر است ریجن اکانت شما با ریجن بازی‌های فیزیکی که می‌خرید هم‌خوانی داشته باشد (هرچند خود کنسول محدودیتی ایجاد نمی‌کند).
+۴. طراحی بدون درایو نوری (تمام دیجیتال)
+دقت داشته باشید که PS5 Pro به صورت پیش‌فرض بدون درایو دیسک (دیسک‌خوان) عرضه می‌شود. یعنی این کنسول دیجیتال است. اگر دیسک‌های بازی PS5 یا PS4 را در خانه دارید، باید درایو دیسک رسمی سونی را به صورت جداگانه خریداری کرده و روی آن نصب کنید.
+
+۵. سایر امکانات
+Wi-Fi 7: پشتیبانی از جدیدترین نسل وای‌فای برای دانلود سریع‌تر بازی‌ها و تاخیر (پینگ) کمتر در بازی‌های آنلاین.
+پشتیبانی از 8K: این کنسول برای تلویزیون‌ها و مانیتورهای نسل جدید و 8K نیز بهینه‌سازی شده است.
+کنترلر DualSense: درون جعبه، یک دسته اصلی دوال‌سنس با قابلیت‌های بازخورد لمسی (Haptic Feedback) و ماشه‌های تطبیق‌پذیر وجود دارد.
+این کنسول برای چه کسی مناسب است؟
+
+اگر یک تلویزیون 4K با پشتیبانی از ۱۲۰ هرتز دارید، به گرافیک بالا اهمیت می‌دهید، می‌خواهید بازی‌ها را در روان‌ترین حالت ممکن اجرا کنید و به فضای ذخیره‌سازی زیادی نیاز دارید، PS5 Pro بهترین انتخاب برای شماست. اگر قصد قرار دادن این محصول در سایت خود را دارید، حتماً به دیجیتال بودن و حافظه ۲ ترابایتی آن به عنوان نقاط قوت کلیدی اشاره کنید.</p>
+                        <div class="product-price">180500000</div>
+                        <a href="https://www.digikala.com/product/dkp-16687176/%DA%A9%D9%86%D8%B3%D9%88%D9%84-%D8%A8%D8%A7%D8%B2%DB%8C-%D8%B3%D9%88%D9%86%DB%8C-%D9%85%D8%AF%D9%84-playstation-5-pro-%D8%B8%D8%B1%D9%81%DB%8C%D8%AA-2-%D8%AA%D8%B1%D8%A7%D8%A8%D8%A7%DB%8C%D8%AA-%D8%B1%DB%8C%D8%AC%D9%86-%D8%A7%D8%B1%D9%88%D9%BE%D8%A7/" target="_blank" class="buy-btn">مشاهده و خرید</a>
+                    </div>
+                
+                    <div class="product-card">
+                        <button class="delete-btn" onclick="deleteProduct(1)">حذف ❌</button>
+                        <img src="Shot 0004.png" alt="بهترین CPU" class="product-img" onerror="this.outerHTML='&lt;div class=\'product-img\'&gt;عکس: Shot 0004.png پیدا نشد&lt;/div&gt;'">
+                        <h2 class="product-title">بهترین CPU</h2>
+                        <p class="product-desc">این پردازنده یکی از قدرتمندترین غول‌های پردازشی اینتل است که به معنای واقعی کلمه برای سیستم‌های فوق‌حرفه‌ای، گیمینگ در بالاترین سطح و پردازش‌های سنگین هوش مصنوعی (AI) ساخته شده است.
+
+قدرت پردازشی: داشتن ۲۴ هسته فیزیکی و فرکانس بوست 
+5.7
+5.7
+ گیگاهرتز به این معنی است که این پردازنده چه در رندرینگ سه‌بعدی و تدوین ویدیوهای 4K/8K و چه در اجرای سنگین‌ترین بازی‌ها، هیچ محدودیتی برای شما ایجاد نمی‌کند.
+فناوری ساخت: لیتوگرافی ۳ نانومتری باعث می‌شود این پردازنده نسبت به نسل‌های قبل انرژی بسیار کمتری مصرف کند و در عین حال گرمای کمتری تولید کند (راندمان فوق‌العاده).
+هوش مصنوعی: سری Core Ultra دارای واحدهای پردازش عصبی (NPU) اختصاصی برای هوش مصنوعی هستند که کارهای مبتنی بر AI را مستقیماً و با سرعت بالا روی خود پردازنده انجام می‌دهند.
+نسخه Tray: این یعنی پردازنده بدون جعبه و فن خنک‌کننده کارخانه‌ای فروخته می‌شود که برای این غول پردازشی کاملاً منطقی است؛ زیرا شما برای خنک کردن آن قطعاً به یک خنک‌کننده مایع (واترکولر) ۳۶۰ میلی‌متری قدرتمند نیاز دارید.
+مادربردهای سازگار با Core Ultra 9 285K
+
+این پردازنده از سوکت جدید LGA 1851 استفاده می‌کند. بنابراین به هیچ وجه با مادربردهای نسل‌های قبلی (مثل سری Z790 یا Z690 با سوکت LGA 1700) سازگار نیست.
+
+برای استفاده از تمام قدرت این پردازنده (مخصوصاً قابلیت اورکلاک آن که با حرف K مشخص شده)، شما باید از مادربردهایی با چیپست Z890 استفاده کنید. در کنار آن، چیپست‌های B860 نیز پشتیبانی می‌شوند اما برای پردازنده‌ای در این سطح پیشنهاد نمی‌شوند.
+
+در اینجا نام سری مادربردهای معتبری که به طور کامل از این پردازنده پشتیبانی می‌کنند را برایتان آورده‌ام:
+
+۱. برند ایسوس (ASUS) - سری Z890:
+
+ROG Maximus Z890 Extreme / Hero / Dark Hero (بهترین انتخاب برای این پردازنده)
+ROG Strix Z890-E / F / A Gaming WiFi
+ProArt Z890-Creator (عالی برای طراحان و تدوین‌گران)
+TUF Gaming Z890-Plus
+Prime Z890-A / P
+۲. برند ام‌اس‌آی (MSI) - سری Z890:
+
+MEG Z890 GODLIKE / ACE (پرچمداران بی‌نظیر MSI)
+MPG Z890 Carbon / Edge WiFi
+MAG Z890 Tomahawk WiFi (محبوب و خوش‌قیمت برای گیمرها)
+PRO Z890-A
+۳. برند گیگابایت (GIGABYTE) - سری Z890:
+
+Z890 AORUS XTREME / MASTER
+Z890 AORUS PRO / ELITE AX
+Z890 AERO G (مخصوص تولیدکنندگان محتوا)
+۴. برند ازراک (ASRock) - سری Z890:
+
+Z890 Taichi (بسیار قدرتمند و زیبا)
+Z890 Phantom Gaming (PG) Nova / Riptide
+Z890 Steel Legend
+نکته مهم: این پردازنده فقط از رم‌های نسل جدید DDR5 پشتیبانی می‌کند. هنگام خرید مادربرد، حتماً مدلی را انتخاب کنید که سیستم مدار تغذیه (VRM) بسیار قدرتمندی داشته باشد تا بتواند برق مورد نیاز این پردازنده ۲۴ هسته‌ای را به پایداری تامین کند. مدل‌های پرچمدار (مثل ROG Maximus یا MEG و AORUS Master) بهترین گزینه‌ها هستند.</p>
+                        <div class="product-price">0</div>
+                        <a href="https://www.digikala.com/" target="_blank" class="buy-btn">مشاهده و خرید</a>
+                    </div>
+                </div>
+
+    <!-- کادر مخفی رمز -->
+    <input type="password" id="secretInput" class="secret-input" placeholder="°">
+
+    <!-- پنل مدیریت -->
+    <div id="adminPanel" style="display: none;">
+        <div class="admin-title">پنل مدیریت سایت</div>
+        
+        <div class="form-group">
+            <label>نام محصول:</label>
+            <input type="text" id="pName" placeholder="مثلا: کامپیوتر گیمینگ Monster">
+        </div>
+        <div class="form-group">
+            <label>نام فایل عکس (همراه فرمت):</label>
+            <input type="text" id="pImg" placeholder="مثلا: gaming-pc.jpg">
+        </div>
+        <div class="form-group">
+            <label>قیمت:</label>
+            <input type="text" id="pPrice" placeholder="مثلا: ۱۲۰,۰۰۰,۰۰۰ تومان">
+        </div>
+        <div class="form-group">
+            <label>لینک خرید (همکاری در فروش):</label>
+            <input type="text" id="pLink" placeholder="https://...">
+        </div>
+        <div class="form-group">
+            <label>توضیحات سئو شده:</label>
+            <textarea id="pDesc" rows="4" placeholder="توضیحات کامل محصول..."></textarea>
+        </div>
+
+        <div class="admin-btns">
+            <button class="btn btn-save" onclick="addProduct()">افزودن محصول</button>
+            <button class="btn btn-download" onclick="downloadSite()">دانلود سایت (ذخیره)</button>
+            <button class="btn btn-close" onclick="closeAdmin()">بستن پنل</button>
+        </div>
+    </div>
+
+    <div id="toast" class="show" style="background: rgb(239, 68, 68);">محصول حذف شد! برای اعمال نهایی، سایت را دانلود کنید.</div>
+
+    <!-- دیتابیس محصولات (درون فایل برای گیت‌هاب) -->
+    <script id="db">
+const initialProducts = [
+    {
+        "name": "پلی استیشن 5 پرو",
+        "img": "Shot 0002.png",
+        "price": "180500000",
+        "link": "https://www.digikala.com/product/dkp-16687176/%DA%A9%D9%86%D8%B3%D9%88%D9%84-%D8%A8%D8%A7%D8%B2%DB%8C-%D8%B3%D9%88%D9%86%DB%8C-%D9%85%D8%AF%D9%84-playstation-5-pro-%D8%B8%D8%B1%D9%81%DB%8C%D8%AA-2-%D8%AA%D8%B1%D8%A7%D8%A8%D8%A7%DB%8C%D8%AA-%D8%B1%DB%8C%D8%AC%D9%86-%D8%A7%D8%B1%D9%88%D9%BE%D8%A7/",
+        "desc": "قدرت پردازشی و گرافیک خیره‌کننده (GPU ارتقا یافته)\nمهم‌ترین تفاوت نسخه Pro با PS5 معمولی، گرافیک بسیار قوی‌تر آن است. سونی در این کنسول از سه تکنولوژی کلیدی استفاده کرده است:\n\nPSSR (ارتقای تصویر با هوش مصنوعی): این قابلیت با استفاده از هوش مصنوعی، رزولوشن بازی‌ها را بالا می‌برد. نتیجه این است که می‌توانید بازی‌ها را با گرافیک 4K و فریم‌ریت بالا (مثلا ۶۰ یا ۱۲۰ فریم در ثانیه) بدون افت کیفیت تجربه کنید.\nRay Tracing (رهگیری پرتو) پیشرفته: بازتاب نور، سایه‌ها و انعکاس در آب یا شیشه در نسخه پرو تا ۲ الی ۳ برابر سریع‌تر و واقع‌گرایانه‌تر پردازش می‌شود.\nشما دیگر مجبور نیستید بین حالت «کیفیت گرافیک» (Fidelity) و «عملکرد روان» (Performance) یکی را انتخاب کنید؛ PS5 Pro ترکیبی از هر دو را ارائه می‌دهد.\n۲. حافظه داخلی ۲ ترابایتی (2TB SSD)\nیکی از بزرگترین مشکلات کنسول‌های قبلی، کمبود فضا بود. سونی در PS5 Pro یک حافظه بسیار سریع ۲ ترابایتی قرار داده است. با توجه به حجم بالای بازی‌های امروزی (که گاهی بالای ۱۰۰ گیگابایت هستند)، با این حجم از حافظه خیالتان برای نصب تعداد زیادی بازی به صورت هم‌زمان راحت خواهد بود و نیازی به خرید سریع هارد اکسترنال ندارید.\n\n۳. ریجن اروپا (Region 2) چه معنایی دارد؟\nکنسول‌های پلی‌استیشن کلا «ریجن‌فری» (Region-Free) هستند؛ یعنی دیسک یا بازی دیجیتالیِ هر نقطه‌ای از جهان روی این کنسول اجرا می‌شود. اما ریجن اروپا (یا همان ریجن ۲) دو نکته دارد:\n\nکابل برق: کابل برق داخل جعبه معمولاً دو‌شاخه‌ی استاندارد اروپایی است که در ایران بدون نیاز به تبدیل‌های عجیب و غریب (برخلاف ریجن بریتانیا یا آسیا) به راحتی به پریز می‌خورد.\nحساب کاربری (PSN): برای خرید بازی‌های دیجیتالی و به‌ویژه افزونه‌ها (DLC)، بهتر است ریجن اکانت شما با ریجن بازی‌های فیزیکی که می‌خرید هم‌خوانی داشته باشد (هرچند خود کنسول محدودیتی ایجاد نمی‌کند).\n۴. طراحی بدون درایو نوری (تمام دیجیتال)\nدقت داشته باشید که PS5 Pro به صورت پیش‌فرض بدون درایو دیسک (دیسک‌خوان) عرضه می‌شود. یعنی این کنسول دیجیتال است. اگر دیسک‌های بازی PS5 یا PS4 را در خانه دارید، باید درایو دیسک رسمی سونی را به صورت جداگانه خریداری کرده و روی آن نصب کنید.\n\n۵. سایر امکانات\nWi-Fi 7: پشتیبانی از جدیدترین نسل وای‌فای برای دانلود سریع‌تر بازی‌ها و تاخیر (پینگ) کمتر در بازی‌های آنلاین.\nپشتیبانی از 8K: این کنسول برای تلویزیون‌ها و مانیتورهای نسل جدید و 8K نیز بهینه‌سازی شده است.\nکنترلر DualSense: درون جعبه، یک دسته اصلی دوال‌سنس با قابلیت‌های بازخورد لمسی (Haptic Feedback) و ماشه‌های تطبیق‌پذیر وجود دارد.\nاین کنسول برای چه کسی مناسب است؟\n\nاگر یک تلویزیون 4K با پشتیبانی از ۱۲۰ هرتز دارید، به گرافیک بالا اهمیت می‌دهید، می‌خواهید بازی‌ها را در روان‌ترین حالت ممکن اجرا کنید و به فضای ذخیره‌سازی زیادی نیاز دارید، PS5 Pro بهترین انتخاب برای شماست. اگر قصد قرار دادن این محصول در سایت خود را دارید، حتماً به دیجیتال بودن و حافظه ۲ ترابایتی آن به عنوان نقاط قوت کلیدی اشاره کنید."
+    },
+    {
+        "name": "بهترین CPU",
+        "img": "Shot 0004.png",
+        "price": "0",
+        "link": "https://www.digikala.com/",
+        "desc": "این پردازنده یکی از قدرتمندترین غول‌های پردازشی اینتل است که به معنای واقعی کلمه برای سیستم‌های فوق‌حرفه‌ای، گیمینگ در بالاترین سطح و پردازش‌های سنگین هوش مصنوعی (AI) ساخته شده است.\n\nقدرت پردازشی: داشتن ۲۴ هسته فیزیکی و فرکانس بوست \n5.7\n5.7\n گیگاهرتز به این معنی است که این پردازنده چه در رندرینگ سه‌بعدی و تدوین ویدیوهای 4K/8K و چه در اجرای سنگین‌ترین بازی‌ها، هیچ محدودیتی برای شما ایجاد نمی‌کند.\nفناوری ساخت: لیتوگرافی ۳ نانومتری باعث می‌شود این پردازنده نسبت به نسل‌های قبل انرژی بسیار کمتری مصرف کند و در عین حال گرمای کمتری تولید کند (راندمان فوق‌العاده).\nهوش مصنوعی: سری Core Ultra دارای واحدهای پردازش عصبی (NPU) اختصاصی برای هوش مصنوعی هستند که کارهای مبتنی بر AI را مستقیماً و با سرعت بالا روی خود پردازنده انجام می‌دهند.\nنسخه Tray: این یعنی پردازنده بدون جعبه و فن خنک‌کننده کارخانه‌ای فروخته می‌شود که برای این غول پردازشی کاملاً منطقی است؛ زیرا شما برای خنک کردن آن قطعاً به یک خنک‌کننده مایع (واترکولر) ۳۶۰ میلی‌متری قدرتمند نیاز دارید.\nمادربردهای سازگار با Core Ultra 9 285K\n\nاین پردازنده از سوکت جدید LGA 1851 استفاده می‌کند. بنابراین به هیچ وجه با مادربردهای نسل‌های قبلی (مثل سری Z790 یا Z690 با سوکت LGA 1700) سازگار نیست.\n\nبرای استفاده از تمام قدرت این پردازنده (مخصوصاً قابلیت اورکلاک آن که با حرف K مشخص شده)، شما باید از مادربردهایی با چیپست Z890 استفاده کنید. در کنار آن، چیپست‌های B860 نیز پشتیبانی می‌شوند اما برای پردازنده‌ای در این سطح پیشنهاد نمی‌شوند.\n\nدر اینجا نام سری مادربردهای معتبری که به طور کامل از این پردازنده پشتیبانی می‌کنند را برایتان آورده‌ام:\n\n۱. برند ایسوس (ASUS) - سری Z890:\n\nROG Maximus Z890 Extreme / Hero / Dark Hero (بهترین انتخاب برای این پردازنده)\nROG Strix Z890-E / F / A Gaming WiFi\nProArt Z890-Creator (عالی برای طراحان و تدوین‌گران)\nTUF Gaming Z890-Plus\nPrime Z890-A / P\n۲. برند ام‌اس‌آی (MSI) - سری Z890:\n\nMEG Z890 GODLIKE / ACE (پرچمداران بی‌نظیر MSI)\nMPG Z890 Carbon / Edge WiFi\nMAG Z890 Tomahawk WiFi (محبوب و خوش‌قیمت برای گیمرها)\nPRO Z890-A\n۳. برند گیگابایت (GIGABYTE) - سری Z890:\n\nZ890 AORUS XTREME / MASTER\nZ890 AORUS PRO / ELITE AX\nZ890 AERO G (مخصوص تولیدکنندگان محتوا)\n۴. برند ازراک (ASRock) - سری Z890:\n\nZ890 Taichi (بسیار قدرتمند و زیبا)\nZ890 Phantom Gaming (PG) Nova / Riptide\nZ890 Steel Legend\nنکته مهم: این پردازنده فقط از رم‌های نسل جدید DDR5 پشتیبانی می‌کند. هنگام خرید مادربرد، حتماً مدلی را انتخاب کنید که سیستم مدار تغذیه (VRM) بسیار قدرتمندی داشته باشد تا بتواند برق مورد نیاز این پردازنده ۲۴ هسته‌ای را به پایداری تامین کند. مدل‌های پرچمدار (مثل ROG Maximus یا MEG و AORUS Master) بهترین گزینه‌ها هستند."
+    }
+];
+    </script>
+
+    <script>
+        let products = [...initialProducts];
+
+        function renderProducts(items) {
+            const grid = document.getElementById('productGrid');
+            grid.innerHTML = '';
+            
+            if(items.length === 0) {
+                grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #94a3b8;">در حال حاضر محصولی در سایت وجود ندارد.</p>';
+                return;
+            }
+
+            items.forEach(p => {
+                const originalIndex = products.indexOf(p);
+                
+                grid.innerHTML += `
+                    <div class="product-card">
+                        <button class="delete-btn" onclick="deleteProduct(${originalIndex})">حذف ❌</button>
+                        <img src="${p.img}" alt="${p.name}" class="product-img" onerror="this.outerHTML='<div class=\\'product-img\\'>عکس: ${p.img} پیدا نشد</div>'">
+                        <h2 class="product-title">${p.name}</h2>
+                        <p class="product-desc">${p.desc}</p>
+                        <div class="product-price">${p.price}</div>
+                        <a href="${p.link}" target="_blank" class="buy-btn">مشاهده و خرید</a>
+                    </div>
+                `;
+            });
+        }
+
+        function searchProducts() {
+            const val = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = products.filter(p => 
+                p.name.toLowerCase().includes(val) || 
+                p.desc.toLowerCase().includes(val)
+            );
+            renderProducts(filtered);
+        }
+
+        const secretPassword = "ASDFGHJKL123456789/";
+        const secretInput = document.getElementById('secretInput');
+
+        secretInput.addEventListener('input', function() {
+            if (this.value === secretPassword) {
+                document.getElementById('adminPanel').style.display = 'block';
+                document.body.classList.add('admin-mode');
+                this.value = ""; 
+                this.blur(); 
+                showToast("پنل مدیریت باز شد.");
+            }
+        });
+
+        function closeAdmin() {
+            document.getElementById('adminPanel').style.display = 'none';
+            document.body.classList.remove('admin-mode');
+        }
+
+        function addProduct() {
+            const name = document.getElementById('pName').value.trim();
+            const img = document.getElementById('pImg').value.trim(); 
+            const price = document.getElementById('pPrice').value.trim();
+            const link = document.getElementById('pLink').value.trim();
+            const desc = document.getElementById('pDesc').value.trim();
+
+            if(!name || !img) {
+                showToast("لطفا نام محصول و نام عکس را وارد کنید!", true);
+                return;
+            }
+
+            products.push({ name, img, price, link, desc });
+            
+            document.getElementById('pName').value = '';
+            document.getElementById('pImg').value = '';
+            document.getElementById('pPrice').value = '';
+            document.getElementById('pLink').value = '';
+            document.getElementById('pDesc').value = '';
+
+            document.getElementById('searchInput').value = '';
+            renderProducts(products);
+            showToast("محصول اضافه شد! برای ذخیره، سایت را دانلود کنید.");
+        }
+
+        function deleteProduct(index) {
+            if (confirm("آیا از حذف این محصول مطمئن هستید؟")) {
+                products.splice(index, 1); 
+                document.getElementById('searchInput').value = '';
+                renderProducts(products);
+                showToast("محصول حذف شد! برای اعمال نهایی، سایت را دانلود کنید.", true);
+            }
+        }
+
+        function downloadSite() {
+            const dbScript = document.getElementById('db');
+            dbScript.textContent = "\nconst initialProducts = " + JSON.stringify(products, null, 4) + ";\n    ";
+
+            document.body.classList.remove('admin-mode'); 
+            document.getElementById('adminPanel').style.display = 'none';
+
+            const htmlContent = "<!DOCTYPE html>\n<html lang='fa' dir='rtl'>\n" + document.documentElement.innerHTML + "\n</html>";
+            
+            const blob = new Blob([htmlContent], { type: "text/html;charset=utf-8" });
+            const link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = "index.html"; 
+            
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            document.body.classList.add('admin-mode');
+            document.getElementById('adminPanel').style.display = 'block';
+
+            showToast("سایت ذخیره شد! فایل جدید را آپلود کنید.");
+        }
+
+        function showToast(msg, isError = false) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.style.background = isError ? "#ef4444" : "#10b981";
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        renderProducts(products);
+    </script>
+
+
+
+
+</body>
+</html>
